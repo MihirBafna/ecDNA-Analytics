@@ -7,27 +7,26 @@
 <style>
     body {
         background: #202A32;
-        height: 100%;
-        width: 100%;
+        box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+        height: auto;
     }
     
     .mycontainer{
         /* border-radius: 10px; */
-        /* border: 1px solid green; */
+        border: 1px solid green;
     }
 
     .mycol{
-        /* border: 3px dotted blue; */
+        border: 3px dotted blue;
     }
 
     .myrow{
-        /* border: 3px solid red; */
-        height: 90%;
+        border: 3px solid red;
+        height: 60%;
     }
 
     .images {
         width: 100%;
-        padding: 0px;
         border-radius: 2%;
         transition: 0.2s ease-in-out;
         /* box-shadow: 0 2px 3px rgba(0,0,0,0.2); */
@@ -39,12 +38,21 @@
         box-shadow: 0 8px 15px rgba(0,0,0,0.3);
     } */
 
+    .selector{
+        position: absolute;
+        background-color: rgba(255, 255, 255, .3);
+        border: 1px solid #FFF;
+        box-sizing: border-box;
+        transition:0.1s;
+        transform: translate(-50%,-50%);
+        z-index: 5;
+    }
 
     .footer {
         position: absolute;
         bottom: 0;
         width: 100%;
-        height: 60px; 
+        height: 20px; 
         line-height: 60px; 
     }
     .gray{
@@ -66,6 +74,10 @@
     font-weight: 700;
     }
 
+    .zoomers{
+        clip: rect(1px,1px,1px,1px);
+    }
+
 </style>
 
 {% endblock %}
@@ -84,23 +96,27 @@
             </div>
         </header>
     </div>
-    <div class="selector"></div>
+    <div id="selector1" class="selector"></div>
+    <div id="selector2" class="selector"></div>
+    <div id="selector3" class="selector"></div>
     <div class="container-fluid d-flex w-100 h-100 p-3 mx-auto flex-column">
         <div class="container-fluid mycontainer">
             <div class="row myrow align-items-center">
                 <div class="col-4 mycol">
-                    <img id="orig" class="img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" data-zoom-image="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="orig" zoom>
+                    <img id="orig" class="img-fluid images row1" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" data-zoom-image="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="orig" zoom>
                 </div>
                 <div class="col-4 mycol ">
-                    <img class="img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="dapi">
+                    <img id="dapi" class="img-fluid images row1" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="dapi">
                 </div>
-                <div class="col-4  mycol">
-                    <img class="img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="ecSeg">
+                <div class="col-4  mycol ">
+                    <img id="ecSeg" class="img-fluid images row1" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="ecSeg">
                 </div>
             </div>
             <div class="row justify-content-around align-items-center myrow">
                 <div class="col-4 mycol">
-                    <img id="origZoom" class="img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="Park">
+                    <img id="origZoom" class="zoomers img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" > 
+                    <!-- style="background-image: url(../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png)" -->
+                    <!-- <img id="origZoom" class="img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="Park"> -->
                     <!-- <div class="img-fluid images" id="origZoom"></div> -->
                 </div>
                 <div class="col-4 mycol">
@@ -108,26 +124,113 @@
                 </div>
             </div>
         </div>
-        <footer class="footer justify-content-center mt-auto">
+        <!-- <footer class="footer justify-content-center mt-auto">
             <div class="inner">
                 <p class="gray">Visualizer created by <a href="https://github.com/MihirBafna">Mihir Bafna</a></p>
             </div>
-        </footer>
+        </footer> -->
     </div>
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function(){startZoom("orig","origZoom")});
-    $(window).resize(function () {startZoom("orig", "origZoom")});
+    $(document).ready(function(){
+        // startZoom("orig", "origZoom")
+        // $(window).resize(function () { startZoom("orig", "origZoom") });
 
-    function startZoom(zoomid, zoomclass){
-        $("#"+zoomid).ezPlus({
-            zoomWindowPosition: zoomclass,
-            zoomWindowWidth: $("#"+zoomid).width(),
-            zoomWindowHeight: $("#"+zoomid).height(),
-            borderColour: '#202A32'
-        })
-    }
+        // function startZoom(zoomid, zoomclass) {
+        //     $("#" + zoomid).ezPlus({
+        //         zoomWindowPosition: zoomclass,
+        //         zoomWindowWidth: $("#" + zoomid).width(),
+        //         zoomWindowHeight: $("#" + zoomid).height(),
+        //         borderColour: '#202A32'
+        //     })
+        // }
+
+        // $(".row1").mousemove(function (e) {
+        //     $("#selector").show();
+        //     $("#selector").css({ "top": e.pageY + "px", "left": e.pageX + "px" });
+        //     // console.log("x: " + e.pageX + " y:" + e.pageY);
+        // });
+
+        // $(".row1").hover(function(e){
+        //     $("#selector").show();
+        //     $("#selector").css({ "top": e.pageY + "px", "left": e.pageX + "px" });
+        //     // console.log("x: " + e.pageX + " y:" + e.pageY);
+            
+        // },
+        // function(){
+        //     $("#selector").hide();
+        // }        
+        // );  
+        var clicked = false;
+        initialize();
+        $("#orig").mousemove(function (event) {
+            initialize();
+            var rowwidth = $(".myrow").width();
+            if(!clicked){
+                $("#selector1").show();
+                $("#selector2").show();
+                $("#selector3").show();
+                $("#selector1").css({ "top": event.pageY + "px", "left": event.pageX + "px" });
+                $("#selector2").css({ "top": event.pageY + "px", "left": event.pageX + rowwidth/3+ "px" });
+                $("#selector3").css({ "top": event.pageY + "px", "left": event.pageX + 2*rowwidth / 3+"px" });
+                showZoom(event.pageX,event.pageY);
+            }
+        });
+        $("#dapi").mousemove(function (event) {
+            if (!clicked) {
+                initialize();
+                var rowwidth = $(".myrow").width();
+                $("#selector1").show();
+                $("#selector2").show();
+                $("#selector3").show();
+                $("#selector2").css({ "top": event.pageY + "px", "left": event.pageX + "px" });
+                $("#selector1").css({ "top": event.pageY + "px", "left": event.pageX - rowwidth/3 + "px" });
+                $("#selector3").css({ "top": event.pageY + "px", "left": event.pageX + rowwidth/3 + "px" });
+            }
+        });   
+        $("#ecSeg").mousemove(function (event) {
+            if (!clicked) {
+                initialize();
+                var rowwidth = $(".myrow").width();
+                $("#selector1").show();
+                $("#selector2").show();
+                $("#selector3").show();
+                $("#selector3").css({ "top": event.pageY + "px", "left": event.pageX + "px" });
+                $("#selector1").css({ "top": event.pageY + "px", "left": event.pageX -2*rowwidth/3+ "px" });
+                $("#selector2").css({ "top": event.pageY + "px", "left": event.pageX -rowwidth/3+ "px" });
+            }
+        }); 
+
+        function showZoom(pagex,pagey){
+            // var x = (pagex - $('#orig').offset().left) + $(window).scrollLeft();
+            // var y = (pagey - $('#orig').offset().top) + $(window).scrollTop();
+            $("#origZoom").css({
+                "clip": "rect(0 px, 0 px,0 px, 0 px)"
+            });
+
+        }
+
+        function initialize(){
+            $("#selector1").hide();
+            $("#selector2").hide();
+            $("#selector3").hide();
+            var lensWidth = $("#orig").width() / 10;
+            var lensHeight = $("#orig").height() / 10;
+            $("#selector1").css({
+                "height": lensHeight,
+                "width": lensWidth
+            });
+            $("#selector2").css({
+                "height": lensHeight,
+                "width": lensWidth
+            });
+            $("#selector3").css({
+                "height": lensHeight,
+                "width": lensWidth
+            });
+        }
+    });
 
 </script>
     
