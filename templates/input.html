@@ -31,6 +31,14 @@
     .gray{
         color: rgba(255, 255, 255, .5);
     } 
+    .zoomers{
+        display: block;
+        background-image: url('../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png');
+        background-size: cover;
+        background: fixed;
+        height: 100px;
+        /* clip: rect(1px,1px,1px,1px); */
+    }
 </style>
 
 {% endblock %}
@@ -51,6 +59,7 @@
 </div>
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <main role="main" class="inner cover">
+        <div class="zoomers"></div>
     </main>
     <!-- <footer class="footer justify-content-center mt-auto">
         <div class="inner">

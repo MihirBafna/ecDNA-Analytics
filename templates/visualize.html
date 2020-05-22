@@ -75,7 +75,8 @@
     }
 
     .zoomers{
-        clip: rect(1px,1px,1px,1px);
+        /* height: 100px; */
+        /* clip: rect(1px,1px,1px,1px); */
     }
 
 </style>
@@ -117,7 +118,7 @@
                     <img id="origZoom" class="zoomers img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" > 
                     <!-- style="background-image: url(../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png)" -->
                     <!-- <img id="origZoom" class="img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="Park"> -->
-                    <!-- <div class="img-fluid images" id="origZoom"></div> -->
+                    <div class="image zoomers" id="origZoom"></div>
                 </div>
                 <div class="col-4 mycol">
                     <img class="img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="Park">
@@ -203,10 +204,26 @@
         }); 
 
         function showZoom(pagex,pagey){
-            // var x = (pagex - $('#orig').offset().left) + $(window).scrollLeft();
-            // var y = (pagey - $('#orig').offset().top) + $(window).scrollTop();
+            var x = $("#selector1").offset().left - $("#orig").offset().left + $("#selector1").width()/2;
+            var y = $("#selector1").offset().top - $("#orig").offset().top + $("#selector1").height() /2;
+            var left = x - ($("#selector1").width()/2);
+            var right = $("#orig").width() - (x + $("#selector1").width()/2);
+            var bottom = $("#orig").height() - (y + $("#selector1").height() /2);
+            var top = y - ($("#selector1").height()/2);
+            // var left = x - $("#orig").width() / 10;
+            // var right = $("#orig").width()-x+ $("#orig").width() / 10;
+            // var top = y - $("#orig").height() / 10;
+            // var bottom = $("#orig").height() - x + $("#orig").height() / 10;
+            var xshift = $("#orig").width() / 2-x;
+            var yshift = $("#orig").height() / 2 - y;
             $("#origZoom").css({
-                "clip": "rect(0 px, 0 px,0 px, 0 px)"
+                // "clip-path":"inset(0px 10px 0px 10px)"
+                "overflow":"hidden",
+                "clip-path": "inset("+top+"px "+right+"px "+bottom+"px "+left+"px )",
+                // "-webkit-clip-path" : "inset("+top+"px "+right+"px "+bottom+"px "+left+"px )",
+                // "background-position":"-"+left*10+"px -"+ y*10+"px"
+                "transform": "translate("+xshift+"px, "+yshift+"px)",
+                // "transform":"scale(10)"
             });
 
         }
