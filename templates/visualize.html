@@ -135,34 +135,6 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        // startZoom("orig", "origZoom")
-        // $(window).resize(function () { startZoom("orig", "origZoom") });
-
-        // function startZoom(zoomid, zoomclass) {
-        //     $("#" + zoomid).ezPlus({
-        //         zoomWindowPosition: zoomclass,
-        //         zoomWindowWidth: $("#" + zoomid).width(),
-        //         zoomWindowHeight: $("#" + zoomid).height(),
-        //         borderColour: '#202A32'
-        //     })
-        // }
-
-        // $(".row1").mousemove(function (e) {
-        //     $("#selector").show();
-        //     $("#selector").css({ "top": e.pageY + "px", "left": e.pageX + "px" });
-        //     // console.log("x: " + e.pageX + " y:" + e.pageY);
-        // });
-
-        // $(".row1").hover(function(e){
-        //     $("#selector").show();
-        //     $("#selector").css({ "top": e.pageY + "px", "left": e.pageX + "px" });
-        //     // console.log("x: " + e.pageX + " y:" + e.pageY);
-            
-        // },
-        // function(){
-        //     $("#selector").hide();
-        // }        
-        // );  
         var clicked = false;
         var orig = false;
         var dapi = false;
@@ -186,18 +158,30 @@
                     if (x < $("#selector1").width() / 2) {
                         orig = false;
                         $("#selector1").css({ "left": zerox + $("#selector1").width() / 2 + "px" });
+                        $("#selector2").css({ "left": zerox + $("#selector1").width() / 2 + rowwidth/3+ "px" });
+                        $("#selector3").css({ "left": zerox + $("#selector1").width() / 2 + 2 * rowwidth / 3 + "px" });
+
                     }
                     if (x > $("#orig").width() - $("#selector1").width() / 2) {
                         orig = false;
                         $("#selector1").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 + "px" });
+                        $("#selector2").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 +rowwidth/3+ "px" });
+                        $("#selector3").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 +2*rowwidth/3+ "px" });
+
                     }
                     if (y < $("#selector1").height() / 2) {
                         orig = false;
                         $("#selector1").css({ "top": zeroy+ $("#selector1").height() / 2 + "px" });
+                        $("#selector2").css({ "top": zeroy + $("#selector1").height() / 2 + "px" });
+                        $("#selector3").css({ "top": zeroy + $("#selector1").height() / 2 + "px" });
+
                     }
                     if (y > $("#orig").height() - $("#selector1").height() / 2) {
                         orig = false;
                         $("#selector1").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+                        $("#selector2").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+                        $("#selector3").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+
                     }
                     showZoom(x, y);
 
@@ -266,6 +250,21 @@
                 }
             }
         });   
+
+        $(window).click(function (event){
+            if (orig || dapi || ecSeg) {
+                clicked = true;
+                $(".selector").css({"border-color":"red","background-color":"rgb(255,0,0,0.5)"})
+            }        
+        });
+        $(window).dblclick(function(event){
+            if(orig || dapi || ecSeg){
+                clicked = false;
+                $(".selector").css({ "border-color": "white", "background-color": "rgb(255,255,255,0.5)" })
+            }
+        });
+
+
         $("#orig").mousemove(function (event) {
             orig = true;
         });
@@ -275,6 +274,7 @@
         $("#ecSeg").mousemove(function (event) {
             ecSeg = true;
         }); 
+
 
         function showZoom(x,y){
             console.log(x,y);
