@@ -13,15 +13,15 @@
     
     .mycontainer{
         /* border-radius: 10px; */
-        border: 1px solid green;
+        /* border: 1px solid green; */
     }
 
     .mycol{
-        border: 3px dotted blue;
+        /* border: 3px dotted blue; */
     }
 
     .myrow{
-        border: 3px solid red;
+        /* border: 3px solid red; */
         height: 60%;
     }
 
@@ -121,7 +121,7 @@
                     <div class="image zoomers" id="origZoom"></div>
                 </div>
                 <div class="col-4 mycol">
-                    <img class="img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="Park">
+                    <img id="ecSegZoom" class="img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="Park">
                 </div>
             </div>
         </div>
@@ -164,78 +164,137 @@
         // }        
         // );  
         var clicked = false;
+        var orig = false;
+        var dapi = false;
+        var ecSeg = false;
         initialize();
         $(window).mousemove(function (event) {
             var rowwidth = $(".myrow").width();
             if (!clicked) {
-                // $("#selector1").show();
-                // $("#selector2").show();
-                // $("#selector3").show();
-                $("#selector1").css({ "top": event.pageY + "px", "left": event.pageX + "px" });
-                $("#selector2").css({ "top": event.pageY + "px", "left": event.pageX + rowwidth / 3 + "px" });
-                $("#selector3").css({ "top": event.pageY + "px", "left": event.pageX + 2 * rowwidth / 3 + "px" });
-                showZoom(event.pageX, event.pageY);
+                if(orig){
+                    initialize();
+                    $("#selector1").css({ "top": event.pageY + "px", "left": event.pageX + "px" });
+                    $("#selector2").css({ "top": event.pageY + "px", "left": event.pageX + rowwidth / 3 + "px" });
+                    $("#selector3").css({ "top": event.pageY + "px", "left": event.pageX + 2 * rowwidth / 3 + "px" });
+                    $("#selector1").show();
+                    $("#selector2").show();
+                    $("#selector3").show();
+                    var zerox = $("#orig").offset().left;
+                    var zeroy = $("#orig").offset().top;
+                    var x = $("#selector1").offset().left - $("#orig").offset().left + $("#selector1").width() / 2;
+                    var y = $("#selector1").offset().top - $("#orig").offset().top + $("#selector1").height() / 2;
+                    if (x < $("#selector1").width() / 2) {
+                        orig = false;
+                        $("#selector1").css({ "left": zerox + $("#selector1").width() / 2 + "px" });
+                    }
+                    if (x > $("#orig").width() - $("#selector1").width() / 2) {
+                        orig = false;
+                        $("#selector1").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 + "px" });
+                    }
+                    if (y < $("#selector1").height() / 2) {
+                        orig = false;
+                        $("#selector1").css({ "top": zeroy+ $("#selector1").height() / 2 + "px" });
+                    }
+                    if (y > $("#orig").height() - $("#selector1").height() / 2) {
+                        orig = false;
+                        $("#selector1").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+                    }
+                    showZoom(x, y);
+
+                }
+                if(dapi){
+                    initialize();
+                    $("#selector2").css({ "top": event.pageY + "px", "left": event.pageX + "px" });
+                    $("#selector1").css({ "top": event.pageY + "px", "left": event.pageX - rowwidth / 3 + "px" });
+                    $("#selector3").css({ "top": event.pageY + "px", "left": event.pageX + rowwidth / 3 + "px" });
+                    $("#selector1").show();
+                    $("#selector2").show();
+                    $("#selector3").show();
+                    var zerox = $("#dapi").offset().left;
+                    var zeroy = $("#dapi").offset().top;
+                    var x = $("#selector2").offset().left - $("#dapi").offset().left + $("#selector2").width() / 2;
+                    var y = $("#selector2").offset().top - $("#dapi").offset().top + $("#selector2").height() / 2;
+                    showZoom(x, y);
+                    if (x < $("#selector1").width() / 2) {
+                        dapi = false;
+                        $("#selector2").css({ "left": zerox + $("#selector1").width() / 2 + "px" });
+                    }
+                    if (x > $("#orig").width() - $("#selector1").width() / 2) {
+                        dapi = false;
+                        $("#selector2").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 + "px" });
+                    }
+                    if (y < $("#selector1").height() / 2) {
+                        dapi = false;
+                        $("#selector2").css({ "top": zeroy + $("#selector1").height() / 2 + "px" });
+                    }
+                    if (y > $("#orig").height() - $("#selector1").height() / 2) {
+                        dapi = false;
+                        $("#selector2").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+                    }
+                }
+                if(ecSeg){
+                    initialize();
+                    $("#selector3").css({ "top": event.pageY + "px", "left": event.pageX + "px" });
+                    $("#selector1").css({ "top": event.pageY + "px", "left": event.pageX - 2 * rowwidth / 3 + "px" });
+                    $("#selector2").css({ "top": event.pageY + "px", "left": event.pageX - rowwidth / 3 + "px" });
+                    $("#selector1").show();
+                    $("#selector2").show();
+                    $("#selector3").show();
+                    var zerox = $("#ecSeg").offset().left;
+                    var zeroy = $("#ecSeg").offset().top;
+                    var x = $("#selector3").offset().left - $("#ecSeg").offset().left + $("#selector3").width() / 2;
+                    var y = $("#selector3").offset().top - $("#ecSeg").offset().top + $("#selector3").height() / 2;
+                    showZoom(x, y);
+                    if (x < $("#selector3").width() / 2) {
+                    ecSeg = false;
+                        $("#selector3").css({ "left": zerox + $("#selector3").width() / 2 + "px" });
+                       
+                    }
+                    if (x > $("#orig").width() - $("#selector1").width() / 2) {
+                    ecSeg = false;
+                        $("#selector3").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 + "px" });
+                        
+                    }
+                    if (y < $("#selector1").height() / 2) {
+                    ecSeg = false;
+                        $("#selector3").css({ "top": zeroy + $("#selector1").height() / 2 + "px" });
+                    }
+                    if (y > $("#orig").height() - $("#selector1").height() / 2) {
+                    ecSeg = false;
+                        $("#selector3").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+                    }
+                }
             }
         });   
         $("#orig").mousemove(function (event) {
-            initialize();
-            var rowwidth = $(".myrow").width();
-            if(!clicked){
-                $("#selector1").show();
-                $("#selector2").show();
-                $("#selector3").show();
-                // $("#selector1").css({ "top": event.pageY + "px", "left": event.pageX + "px" });
-                // $("#selector2").css({ "top": event.pageY + "px", "left": event.pageX + rowwidth/3+ "px" });
-                // $("#selector3").css({ "top": event.pageY + "px", "left": event.pageX + 2*rowwidth / 3+"px" });
-                // showZoom(event.pageX,event.pageY);
-            }
+            orig = true;
         });
         $("#dapi").mousemove(function (event) {
-            if (!clicked) {
-                initialize();
-                var rowwidth = $(".myrow").width();
-                $("#selector1").show();
-                $("#selector2").show();
-                $("#selector3").show();
-                $("#selector2").css({ "top": event.pageY + "px", "left": event.pageX + "px" });
-                $("#selector1").css({ "top": event.pageY + "px", "left": event.pageX - rowwidth/3 + "px" });
-                $("#selector3").css({ "top": event.pageY + "px", "left": event.pageX + rowwidth/3 + "px" });
-            }
+            dapi = true;
         });   
         $("#ecSeg").mousemove(function (event) {
-            if (!clicked) {
-                initialize();
-                var rowwidth = $(".myrow").width();
-                $("#selector1").show();
-                $("#selector2").show();
-                $("#selector3").show();
-                $("#selector3").css({ "top": event.pageY + "px", "left": event.pageX + "px" });
-                $("#selector1").css({ "top": event.pageY + "px", "left": event.pageX -2*rowwidth/3+ "px" });
-                $("#selector2").css({ "top": event.pageY + "px", "left": event.pageX -rowwidth/3+ "px" });
-            }
+            ecSeg = true;
         }); 
 
-        function showZoom(pagex,pagey){
-            var x = $("#selector1").offset().left - $("#orig").offset().left + $("#selector1").width()/2;
-            var y = $("#selector1").offset().top - $("#orig").offset().top + $("#selector1").height() /2;
+        function showZoom(x,y){
             console.log(x,y);
             var left = x - ($("#selector1").width()/2);
             var right = $("#orig").width() - (x + $("#selector1").width()/2);
             var bottom = $("#orig").height() - (y + $("#selector1").height() /2);
             var top = y - ($("#selector1").height()/2);
-            // var left = x - $("#orig").width() / 10;
-            // var right = $("#orig").width()-x+ $("#orig").width() / 10;
-            // var top = y - $("#orig").height() / 10;
-            // var bottom = $("#orig").height() - x + $("#orig").height() / 10;
             var xshift = $("#orig").width() / 2-x;
             var yshift = $("#orig").height() / 2 - y;
             $("#origZoom").css({
-                // "clip-path":"inset(0px 10px 0px 10px)"
                 "overflow":"hidden",
                 "clip-path": "inset("+top+"px "+right+"px "+bottom+"px "+left+"px )",
-                // "-webkit-clip-path" : "inset("+top+"px "+right+"px "+bottom+"px "+left+"px )",
-                // "background-position":"-"+left*10+"px -"+ y*10+"px"
-                "transform": "scale(10) translate("+xshift+"px, "+yshift+"px)",
+                "-webkit-clip-path" : "inset("+top+"px "+right+"px "+bottom+"px "+left+"px )",
+                "transform": "scale(10) translate("+xshift+"px, "+yshift+"px)"
+            });
+            $("#ecSegZoom").css({
+                "overflow": "hidden",
+                "clip-path": "inset(" + top + "px " + right + "px " + bottom + "px " + left + "px )",
+                "-webkit-clip-path": "inset(" + top + "px " + right + "px " + bottom + "px " + left + "px )",
+                "transform": "scale(10) translate(" + xshift + "px, " + yshift + "px)"
             });
 
         }
