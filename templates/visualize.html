@@ -78,16 +78,75 @@
         /* height: 100px; */
         /* clip: rect(1px,1px,1px,1px); */
     }
+    .sidenav {
+        height: 100%; /* 100% Full-height */
+        width: 0; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 6; /* Stay on top */
+        top: 0; /* Stay at the top */
+        left: 0;
+        background-color: rgb(0,0,0,0.8); /* Black*/
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 60px; /* Place content 60px from the top */
+        transition: 0.3s; /* 0.5 second transition effect to slide in the sidenav */
+    }
+
+        /* The navigation menu links */
+    .sidenav a {
+        padding: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+    }
+
+        /* When you mouse over the navigation links, change their color */
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+        /* Position and style the close button (top right corner) */
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 16px;
+        font-size: 20px;
+        margin-left: 50px;
+    }
+    .imageselect{
+        position: absolute;
+        left:20px;
+        cursor: pointer;
+    }
+
+    .imageselect:hover{
+        color: rgba(255, 255, 255, .5);
+    }
+        /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+    #main {
+        transition: margin-left .3s;
+    }
+
 
 </style>
 
 {% endblock %}
 
 {% block body %}
+
 <div class="container-fluid">
     <div class="cover-container d-flex p-3 mx-auto flex-column">
+        <div id="mySidenav" class="sidenav">
+            <a id="closebtn" href="javascript:void(0)" class="closebtn">&times;</a>
+            <a href="#">IMG1</a>
+            <a href="#">IMG2</a>
+            <a href="#">IMG3</a>
+            <a href="#">IMG4</a>
+        </div>
         <header class="masthead mb-auto">
             <div class="inner">
+                <h3 id="menubtn" class="nav nav-masthead imageselect" >&#9776;</h3>
                 <h3 class="masthead-brand">ecDNA Visualizer</h3>
                 <nav class="nav nav-masthead justify-content-center">
                     <a class="nav-link" href="/">Home</a>
@@ -97,10 +156,10 @@
             </div>
         </header>
     </div>
-    <div id="selector1" class="selector"></div>
-    <div id="selector2" class="selector"></div>
-    <div id="selector3" class="selector"></div>
-    <div class="container-fluid d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <div id = "main" class="container-fluid d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <div id="selector1" class="selector"></div>
+        <div id="selector2" class="selector"></div>
+        <div id="selector3" class="selector"></div>
         <div class="container-fluid mycontainer">
             <div class="row myrow align-items-center">
                 <div class="col-4 mycol">
@@ -116,8 +175,6 @@
             <div class="row justify-content-around align-items-center myrow">
                 <div class="col-4 mycol">
                     <img id="origZoom" class="zoomers img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" > 
-                    <!-- style="background-image: url(../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png)" -->
-                    <!-- <img id="origZoom" class="img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="Park"> -->
                     <div class="image zoomers" id="origZoom"></div>
                 </div>
                 <div class="col-4 mycol">
@@ -135,10 +192,11 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        var clicked = false;
+        var clicked = true;
         var orig = false;
         var dapi = false;
         var ecSeg = false;
+        $(".selector").css({ "border-color": "red", "background-color": "rgb(255,0,0,0.5)" })
         initialize();
         $(window).mousemove(function (event) {
             var rowwidth = $(".myrow").width();
@@ -251,6 +309,12 @@
             }
         });   
 
+        $(window).resize(function(event){
+            // $(".selector").hide();
+            $("#origZoom").hide();
+            $("#ecSegZoom").hide();
+        })
+
         $(window).click(function (event){
             if (orig || dapi || ecSeg) {
                 clicked = true;
@@ -300,6 +364,8 @@
         }
 
         function initialize(){
+            $("#origZoom").show();
+            $("#ecSegZoom").show();
             $("#selector1").hide();
             $("#selector2").hide();
             $("#selector3").hide();
@@ -318,6 +384,18 @@
                 "width": lensWidth
             });
         }
+
+
+        $("#menubtn").click(function(){
+            $("#mySidenav").css({
+                "width": "250px"
+            })
+        });
+        $("#closebtn").click(function () {
+            $("#mySidenav").css({
+                "width": "0px"
+            })
+        });
     });
 
 </script>
