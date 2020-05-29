@@ -61,8 +61,8 @@
     */
     .cover {
         /* border: 3px white solid; */
-        padding: 0 1.5rem;
-        height: 65%;
+        padding: 30% 1.5rem;
+        /* height: 65%; */
     }
     .cover .btn-lg {
         padding: .75rem 1.25rem;
@@ -93,12 +93,13 @@
     }
 
     .myrow{
-        border: #fff solid 3px;
+        /* border: #fff solid 3px; */
         align-items: center;
         height: 90%;
     }
     .card{
         background: rgb(255,255,255,0.4);
+        height: 60%;
     }
 
 </style>
@@ -160,11 +161,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#start").click(function () {
-            console.log($("#toolslide").offset().top);
+            // console.log($("#toolslide").offset().top);
             $('html, body').animate({
                 scrollTop: $("#toolslide").offset().top
             }, 2000
             );
+            $(".footer").animate({background:'rgba(37, 193, 255, 0.6)'},2000);
         });
     });
 </script>
