@@ -23,7 +23,8 @@ a:hover {
 /*
  * Header
  */
-.masthead {
+.masthead {  
+  position: fixed;
   margin-bottom: 2rem;
 }
 

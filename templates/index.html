@@ -5,16 +5,31 @@
 <title>Home</title>
 <style>
     body {
-        background: #202A32;
+
+        background-image: url("../static/img/ecDNABackground.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        /* opacity: 0.5;    */
+
     }
 
-    .btn{
-        color: #202A32;
+    .background{
+        width: 100%;
+        height: 100%;
+        /* background: rgba(49, 62, 73, 0.6); */
+        background: rgba(38, 47, 56, 0.6);
+        /* background: rgba(0,0,0,0.5); */
     }
-    .btn:hover{
+    .btn{
         border-color: rgb(24, 190, 255);
         background: rgb(24, 190, 255);
         color: #ffffff;
+    }
+    .btn:hover{
+        color: #ffffff;
+        background: rgb(32, 42, 50,0.7);
     }
         /*
     * Base structure
@@ -22,7 +37,10 @@
 
     html,
     body {
+    overflow: hidden;
     height: 100%;
+    min-height: 100%;
+
     }
 
     body {
@@ -36,51 +54,115 @@
 
     .cover-container {
     max-width: 42em;
+    
     }
     /*
     * Cover
     */
     .cover {
-    padding: 0 1.5rem;
+        /* border: 3px white solid; */
+        padding: 0 1.5rem;
+        height: 65%;
     }
     .cover .btn-lg {
-    padding: .75rem 1.25rem;
-    font-weight: 700;
+        padding: .75rem 1.25rem;
+        font-weight: 700;
     }
-    
+    .footer {
+        /* background-color: rgba(37, 193, 255, 0.6); */
+        /* border: 3px white solid; */
+        position: fixed;
+        /* left: 40%; */
+        bottom: 0px;
+        width: 100%;
+        justify-content: center;
+        height: 60px; 
+        line-height: 60px; 
+    }
+
+    .modal{
+        background-color: rgb(0,0,0,0.5);
+    }
+
+    .divider{
+        background: rgb(35, 41, 46,0.8);
+        height:30%;
+    }
+    #toolslide{
+        /* border: white 3px solid; */
+    }
+
+    .card{
+        background: rgb(255,255,255,0.4);
+    }
+
 </style>
 
 {% endblock %}
 
 {% block body %}
+<div class="background">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand">ecDNA Visualizer</h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link active" href="/">Home</a>
+                    <a class="nav-link" href="mpDetector">mpDetection</a>
+                    <a class="nav-link" href="input">ecSegAnalytics</a>
+                </nav>
+            </div>
+        </header>
 
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
-        <div class="inner">
-            <h3 class="masthead-brand">ecDNA Visualizer</h3>
-            <nav class="nav nav-masthead justify-content-center">
-                <a class="nav-link active" href="/">Home</a>
-                <a class="nav-link" href="input">Input</a>
-                <a class="nav-link" href="visualize">Visualize</a>
-            </nav>
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">ecDNA Visualizer</h1>
+            <p class="lead">Visualization platform for metaphase cluster detection and ecDNA segmentation analysis</p>
+            <p class="lead">
+                <a id="start" class="btn btn-lg btn-secondary">Get Started</a>
+            </p>
+        </main>
+
+    </div>
+    <div id="toolslide" class="background">
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <div class="row myrow justify-content-around ">
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">mpDetection</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                            content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">ecSegAnalytics</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                            content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </header>
-
-    <main role="main" class="inner cover">
-        <h1 class="cover-heading">ecDNA Visualizer</h1>
-        <p class="lead">Visualization for ecSeg: a platform to segment and analyze metaphase images containing extrachromosomal DNA (ecDNA) stained with DAPI and FISH
-        probes.</p>
-        <p class="lead">
-            <a href="input" class="btn btn-lg btn-secondary">Get Started</a>
-        </p>
-    </main>
-
-    <footer class="mastfoot mt-auto">
-        <div class="inner">
+    </div>
+    <footer class="footer mastfoot mt-auto">
+        <div class=" inner">
             <p>Visualizer created by <a href="https://github.com/MihirBafna">Mihir Bafna</a></p>
         </div>
     </footer>
 </div>
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#start").click(function () {
+            console.log($("#toolslide").offset().top);
+            $('html, body').animate({
+                scrollTop: $("#toolslide").offset().top
+            }, 2000
+            );
+        });
+    });
+</script>
 
 {% endblock %}

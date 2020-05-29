@@ -14,5 +14,9 @@ def input():
 def visualize():
     return render_template('visualize.html')
 
+@app.route('/mpDetector')
+def mpDetector():
+    return render_template('mpDetector.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
