@@ -261,18 +261,29 @@
                     if (x < $("#selector1").width() / 2) {
                         dapi = false;
                         $("#selector2").css({ "left": zerox + $("#selector1").width() / 2 + "px" });
+                        $("#selector1").css({ "left": zerox + $("#selector1").width() / 2 - rowwidth/3 + "px" });
+                        $("#selector3").css({ "left": zerox + $("#selector1").width() / 2 + rowwidth/3 + "px" });
+
                     }
                     if (x > $("#orig").width() - $("#selector1").width() / 2) {
                         dapi = false;
                         $("#selector2").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 + "px" });
+                        $("#selector1").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 -rowwidth/3 + "px" });
+                        $("#selector3").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 +rowwidth/3 + "px" });
+
                     }
                     if (y < $("#selector1").height() / 2) {
                         dapi = false;
                         $("#selector2").css({ "top": zeroy + $("#selector1").height() / 2 + "px" });
+                        $("#selector1").css({ "top": zeroy + $("#selector1").height() / 2 + "px" });
+                        $("#selector3").css({ "top": zeroy + $("#selector1").height() / 2 + "px" });
                     }
                     if (y > $("#orig").height() - $("#selector1").height() / 2) {
                         dapi = false;
                         $("#selector2").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+                        $("#selector1").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+                        $("#selector3").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+
                     }
                 }
                 if(ecSeg){
@@ -291,20 +302,30 @@
                     if (x < $("#selector3").width() / 2) {
                     ecSeg = false;
                         $("#selector3").css({ "left": zerox + $("#selector3").width() / 2 + "px" });
+                        $("#selector1").css({ "left": zerox + $("#selector3").width() / 2 -2*rowwidth/3+ "px" });
+                        $("#selector2").css({ "left": zerox + $("#selector3").width() / 2 -rowwidth/3+ "px" });
                        
                     }
                     if (x > $("#orig").width() - $("#selector1").width() / 2) {
                     ecSeg = false;
                         $("#selector3").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 + "px" });
-                        
+                        $("#selector1").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 -2*rowwidth/3 + "px" });
+                        $("#selector2").css({ "left": zerox + $("#orig").width() - $("#selector1").width() / 2 -rowwidth/3+ "px" });
+                     
                     }
                     if (y < $("#selector1").height() / 2) {
                     ecSeg = false;
                         $("#selector3").css({ "top": zeroy + $("#selector1").height() / 2 + "px" });
+                        $("#selector1").css({ "top": zeroy + $("#selector1").height() / 2 + "px" });
+                        $("#selector2").css({ "top": zeroy + $("#selector1").height() / 2 + "px" });
+
                     }
                     if (y > $("#orig").height() - $("#selector1").height() / 2) {
                     ecSeg = false;
                         $("#selector3").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+                        $("#selector1").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+                        $("#selector2").css({ "top": zeroy + $("#orig").height() - $("#selector1").height() / 2 + "px" });
+
                     }
                 }
             }
