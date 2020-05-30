@@ -153,9 +153,9 @@
             <h3> Select Image: </h3>
             {% for image in images %}
                 {% if image==imgname %}
-                    <a class="selected imglinks" href="#">{{image}}</a>
+                    <a id="{{imgname}}" class="selected imglinks" href="/visualize/{{image}}">{{image}}</a>
                 {% else %}
-                    <a class="imglinks" href="#">{{image}}</a>
+                    <a id="{{imgname}}" class="imglinks" href="/visualize/{{image}}">{{image}}</a>
                 {% endif %}
                 
             {% endfor %}
@@ -166,8 +166,8 @@
                 <h3 class="masthead-brand">ecSeg Analyzer</h3>
                 <nav class="nav nav-masthead justify-content-center">
                     <!-- <a class="nav-link" href="/">Home</a> -->
-                    <a class="nav-link" href="input">Input</a>
-                    <a class="nav-link active" href="visualize">Visualize</a>
+                    <a class="nav-link" href="/input">Input</a>
+                    <a class="nav-link active" href="/visualize">Visualize</a>
                 </nav>
             </div>
         </header>
@@ -443,9 +443,6 @@
             })
         });
 
-        function convertImages(){
-
-        }
     });
 
 </script>
