@@ -157,13 +157,12 @@
                 {% else %}
                     <a id="{{imgname}}" class="imglinks" href="/visualize/{{image}}">{{image}}</a>
                 {% endif %}
-                
             {% endfor %}
         </div>
         <header class="masthead mb-auto">
             <div class="inner">
                 <h3 id="menubtn" class="nav nav-masthead imageselect" >&#9776;</h3>
-                <h3 class="masthead-brand">ecSeg Analyzer</h3>
+                <h3 class="masthead-brand">ecSeg Analytics</h3>
                 <nav class="nav nav-masthead justify-content-center">
                     <!-- <a class="nav-link" href="/">Home</a> -->
                     <a class="nav-link" href="/input">Input</a>
@@ -356,6 +355,7 @@
             if (orig || dapi || ecSeg) {
                 clicked = true;
                 $(".selector").css({"border-color":"red","background-color":"rgb(255,0,0,0.5)"})
+            
             }        
         });
         $(window).dblclick(function(event){
