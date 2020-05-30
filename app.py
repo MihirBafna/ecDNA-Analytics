@@ -1,6 +1,16 @@
 from flask import Flask, render_template
+import os
+
 
 app = Flask(__name__)
+
+# get image data after ecSeg is run
+imagedict=[]
+for file in os.listdir("static/img/ecSegOutput/dapi2"):
+    if file.endswith(".png"):
+        imagedict.append(file)
+print(imagedict[0])
+
 
 @app.route('/')
 def home():
@@ -12,7 +22,7 @@ def input():
 
 @app.route('/visualize')
 def visualize():
-    return render_template('visualize.html')
+    return render_template('visualize.html', images=imagedict, imgname=imagedict[0])
 
 @app.route('/mpDetector')
 def mpDetector():
