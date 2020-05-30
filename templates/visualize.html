@@ -86,7 +86,7 @@
         z-index: 6; /* Stay on top */
         top: 0; /* Stay at the top */
         left: 0;
-        background-color: rgb(0,0,0,0.8); /* Black*/
+        background-color: rgba(14, 24, 36, 0.95); /* Black*/
         overflow-x: hidden; /* Disable horizontal scroll */
         padding-top: 60px; /* Place content 60px from the top */
         transition: 0.3s; /* 0.5 second transition effect to slide in the sidenav */
@@ -94,19 +94,29 @@
 
         /* The navigation menu links */
     .sidenav a {
+        margin-left: 10px;
         padding: 5px;
         text-decoration: none;
-        font-size: 16px;
-        color: #818181;
+        text-align: left;
+        font-size: 11px;
+        color: white;
         display: block;
         transition: 0.3s;
+    }
+    .sidenav h3{
+        top: 10px;
+        padding-bottom: 10px;
+        font-size: 18px;
     }
 
         /* When you mouse over the navigation links, change their color */
     .sidenav a:hover {
-        color: #f1f1f1;
+        color: rgb(24, 190, 255);
     }
 
+    .sidenav .selected {
+        color: rgb(24, 190, 255);
+    }
         /* Position and style the close button (top right corner) */
     .sidenav .closebtn {
         position: absolute;
@@ -140,10 +150,15 @@
     <div class="cover-container d-flex p-3 mx-auto flex-column">
         <div id="mySidenav" class="sidenav">
             <a id="closebtn" href="javascript:void(0)" class="closebtn">&times;</a>
-            <a href="#">IMG1</a>
-            <a href="#">IMG2</a>
-            <a href="#">IMG3</a>
-            <a href="#">IMG4</a>
+            <h3> Select Image: </h3>
+            {% for image in images %}
+                {% if image==imgname %}
+                    <a class="selected imglinks" href="#">{{image}}</a>
+                {% else %}
+                    <a class="imglinks" href="#">{{image}}</a>
+                {% endif %}
+                
+            {% endfor %}
         </div>
         <header class="masthead mb-auto">
             <div class="inner">
@@ -164,22 +179,22 @@
         <div class="container-fluid mycontainer">
             <div class="row myrow align-items-center">
                 <div class="col-4 mycol">
-                    <img id="orig" class="img-fluid images row1" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" data-zoom-image="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="orig" zoom>
+                    <img id="orig" class="img-fluid images row1" src= "{{ '../static/img/ecSegOutput/orig/'+ imgname }}" alt="orig">
                 </div>
                 <div class="col-4 mycol ">
-                    <img id="dapi" class="img-fluid images row1" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="dapi">
+                    <img id="dapi" class="img-fluid images row1" src="{{ '../static/img/ecSegOutput/dapi2/'+ imgname }}" alt="dapi">
                 </div>
                 <div class="col-4  mycol ">
-                    <img id="ecSeg" class="img-fluid images row1" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="ecSeg">
+                    <img id="ecSeg" class="img-fluid images row1" src="{{ '../static/img/ecSegOutput/ecSeg/'+ imgname }}" alt="ecSeg">
                 </div>
             </div>
             <div class="row justify-content-around align-items-center myrow">
                 <div class="col-4 mycol">
-                    <img id="origZoom" class="zoomers img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" > 
+                    <img id="origZoom" class="zoomers img-fluid images" src="{{ '../static/img/ecSegOutput/orig/'+ imgname }}" > 
                     <div class="image zoomers" id="origZoom"></div>
                 </div>
                 <div class="col-4 mycol">
-                    <img id="ecSegZoom" class="img-fluid images" src="../static/img/ecSeg/COLO320DM_0uM_HU_21d_01.png" alt="Park">
+                    <img id="ecSegZoom" class="img-fluid images" src="{{ '../static/img/ecSegOutput/ecSeg/'+ imgname }}" alt="Park">
                 </div>
             </div>
         </div>
@@ -197,10 +212,10 @@
         var orig = false;
         var dapi = false;
         var ecSeg = false;
-        $(".selector").css({ "border-color": "red", "background-color": "rgb(255,0,0,0.5)" })
+        var rowwidth = $(".myrow").width();
         initialize();
         $(window).mousemove(function (event) {
-            var rowwidth = $(".myrow").width();
+            rowwidth = $(".myrow").width();
             if (!clicked) {
                 if(orig){
                     initialize();
@@ -361,9 +376,18 @@
             ecSeg = true;
         }); 
 
+        // function start(){
+        //     var centerx = $("#orig").offset().left+$("#ecSeg").width()/2;
+        //     var centery = $("#orig").offset().top + $("#ecSeg").height() / 2;
+        //     console.log(centerx,centery);
+        //     $(".selector").css({ "border-color": "red", "background-color": "rgb(255,0,0,0.5)" })
+        //     $("#selector1").css({ "top": centery-$("#selector1").height()/2 + "px", "left": centerx - $("#selector1").width() / 2 +"px"});
+        //     $("#selector2").css({ "top": centery - $("#selector1").height() / 2+ "px", "left": centerx - $("#selector1").width() / 2 + rowwidth/3+ "px"});
+        //     $("#selector3").css({ "top": centery - $("#selector1").height() / 2+ "px", "left": centerx - $("#selector1").width() / 2 + 2*rowwidth/3+ "px"});
+        //     showZoom(centerx,centery);
+        // }
 
         function showZoom(x,y){
-            console.log(x,y);
             var left = x - ($("#selector1").width()/2);
             var right = $("#orig").width() - (x + $("#selector1").width()/2);
             var bottom = $("#orig").height() - (y + $("#selector1").height() /2);
@@ -410,7 +434,7 @@
 
         $("#menubtn").click(function(){
             $("#mySidenav").css({
-                "width": "250px"
+                "width": "500px"
             })
         });
         $("#closebtn").click(function () {
@@ -418,6 +442,10 @@
                 "width": "0px"
             })
         });
+
+        function convertImages(){
+
+        }
     });
 
 </script>
