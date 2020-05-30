@@ -9,7 +9,7 @@ imagedict=[]
 for file in os.listdir("static/img/ecSegOutput/dapi2"):
     if file.endswith(".png"):
         imagedict.append(file)
-print(imagedict[0])
+# print(imagedict[0])
 
 
 @app.route('/')
