@@ -20,9 +20,10 @@ def home():
 def input():
     return render_template('input.html')
 
-@app.route('/visualize')
-def visualize():
-    return render_template('visualize.html', images=imagelist, imgname=imagelist[0])
+@app.route('/visualize', defaults={'img':imagelist[0]})
+@app.route('/visualize/<img>')
+def visualize(img):
+    return render_template('visualize.html', images=imagelist, imgname=img)
 
 @app.route('/mpDetector')
 def mpDetector():
