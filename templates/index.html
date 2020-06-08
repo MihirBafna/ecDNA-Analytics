@@ -18,7 +18,7 @@
         width: 100%;
         height: 100%;
         /* background: rgba(49, 62, 73, 0.6); */
-        background: rgba(38, 47, 56, 0.6);
+        background: rgba(38, 47, 56, 0.8);
         /* background: rgba(0,0,0,0.5); */
     }
     .btn{
@@ -61,7 +61,7 @@
     .cover {
         /* border: 3px white solid; */
         padding: 0 1.5rem;
-        height: 65%;
+        height: 70%;
     }
     .cover .btn-lg {
         padding: .75rem 1.25rem;
@@ -100,7 +100,15 @@
         background: rgb(255,255,255,0.4);
         height: 300px;
     }
-
+    hr {
+        padding-top: 2px;
+        border: 0;
+        clear:both;
+        display:block;
+        width: 96%;               
+        background-color:#ffffff;
+        height: 1px;
+    }
 </style>
 
 {% endblock %}
@@ -120,11 +128,13 @@
         </header>
 
         <main role="main" class="inner cover">
+            <hr class="line">
             <h1 class="cover-heading">ecDNA Analytics</h1>
             <p class="lead">Visualization platform for metaphase spread detection and ecDNA segmentation analysis</p>
             <p class="lead">
                 <a id="start" class="btn btn-lg btn-secondary">Get Started</a>
             </p>
+            <hr class="line">
         </main>
 
     </div>
