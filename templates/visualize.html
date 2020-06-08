@@ -133,9 +133,19 @@
     .imageselect:hover{
         color: rgba(255, 255, 255, .5);
     }
-        /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-    #main {
-        transition: margin-left .3s;
+    .sub{
+    /* font-style: italic; */
+    color: rgb(24, 190, 255);
+    }
+
+    .line{
+        padding-top: 2px;
+        border: 0;
+        clear:both;
+        display:block;
+        width: 100%;               
+        background-color:#ffffff;
+        height: 1px;
     }
 
 
@@ -161,7 +171,8 @@
         <header class="masthead mb-auto">
             <div class="inner">
                 <h3 id="menubtn" class="nav nav-masthead imageselect" >&#9776;</h3>
-                <h3 class="masthead-brand">ecSeg</h3>
+                <h2 class="masthead-brand">ecDNA Analytics: </h2>
+                <h2 class="masthead-brand sub"> ecSeg</h2>
                 <nav class="nav nav-masthead justify-content-center">
                     <!-- <a class="nav-link" href="/">Home</a> -->
                     <a class="nav-link" href="/input">Input</a>
@@ -169,6 +180,7 @@
                 </nav>
             </div>
         </header>
+    <hr class="line">
     </div>
     <div id = "main" class="container-fluid d-flex w-100 h-100 p-3 mx-auto flex-column">
         <div id="selector1" class="selector"></div>
