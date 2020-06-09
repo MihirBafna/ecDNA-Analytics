@@ -1,16 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request, session
 import os
+from werkzeug.utils import secure_filename
+from datetime import datetime
 
 
 app = Flask(__name__)
 
-# get image data after ecSeg is run
-imagelist=[]
-for file in os.listdir("static/img/ecSegOutput/dapi2"):
-    if file.endswith(".png"):
-        imagelist.append(file)
-# print(imagedict[0])
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+# session = dict()
+# session['folder']="this"
+# session['imagelist']=[]
 
 @app.route('/')
 def home():
@@ -20,10 +20,104 @@ def home():
 def input():
     return render_template('input.html')
 
-@app.route('/visualize', defaults={'img':imagelist[0]})
+
+app.config["IMAGE_UPLOADS"] = "/Users/MihirBafna/Documents/CS/Projects/ecDNA-Analytics/static/img"
+app.config["ALLOWED_INPUT_IMAGE_EXTENSIONS"] = ["TIF", "TIFF"]
+app.config["ALLOWED_OUTPUT_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "TIF", "TIFF"]
+
+def imglist(filepath):
+        # get image data after ecSeg is run
+    print(os.listdir(filepath))
+    imagelist = []
+    for file in os.listdir(filepath):
+        if file.endswith(".png"):
+            imagelist.append(file)
+    print(imagelist[0])
+    return(imagelist)
+
+def allowed_image(filename, inout):
+    if not "." in filename:
+        return False
+    ext = filename.rsplit(".", 1)[1]
+    if inout and ext.upper() in app.config["ALLOWED_INPUT_IMAGE_EXTENSIONS"]:
+            return True
+    elif not inout and ext.upper() in app.config["ALLOWED_OUTPUT_IMAGE_EXTENSIONS"]:
+            return True
+    else:
+        return False
+
+@app.route('/uploadInput', methods=["GET","POST"])
+def uploadInput():
+    if request.method == "POST":
+        if request.files:
+            folder = request.files.getlist("input-folder-2[]")
+            timestamped = datetime.now().strftime('%Y-%m-%d_%H%M%S')
+            folderpath = os.path.join(app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "orig")
+            os.makedirs(folderpath)
+            for file in folder:
+                print(file.filename)
+                if file.filename == "":
+                    print("ERROR: File has no filename")
+                    return redirect(request.url)
+                if allowed_image(file.filename, True):
+                    path = os.path.join(
+                        app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, file.filename)
+                    file.save(path)
+                    print("Image saved" +path)
+                else:
+                    print("not allowed")
+    # RUN ECSEG HERE
+    # *
+    # *
+    # *
+    #
+    #     imagelist = imglist((os.path.join(app.config["IMAGE_UPLOADS"], "ecSegOutput"+timestamped)))
+    # return render_template('visualize.html'+'/'+str(imagelist[0]))
+    return ""
+
+@app.route('/uploadecSeg', methods=["GET","POST"])
+def uploadecSeg():
+    if request.method == "POST":
+        if request.files:
+            folder = request.files.getlist("input-folder-3[]")
+            timestamped = datetime.now().strftime('%Y-%m-%d_%H%M%S')
+            folderpath = os.path.join(
+                app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "orig")
+            os.makedirs(folderpath)
+            for file in folder:
+                print(file.filename)
+                if file.filename == "":
+                    print("ERROR: File has no filename")
+                    return redirect(request.url)
+                if allowed_image(file.filename, False):
+                    path = os.path.join(
+                        app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, file.filename)
+                    file.save(path)
+                    print(file.filename+" saved")
+                else:
+                    print("not allowed")
+    path = os.path.join(app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "orig")+'/'
+    session['folder']=timestamped
+    # imagelist = imglist(folderpath)
+    # print('../static/img/ecSegOutput/'+timestamped+'/orig/' + imagelist[0])
+    session['imagelist'] = imglist(path)
+    session['imagename'] = session['imagelist'][0]
+    return redirect('/visualize')
+
+# @app.route('/visualize', defaults={'img': ""})
+# @app.route('/visualize/<folder>/<img>')
+# def visualize(folder, img):
+#     return render_template('visualize.html', images=imagelist, folder=folder, imgname=img)
+
 @app.route('/visualize/<img>')
-def visualize(img):
-    return render_template('visualize.html', images=imagelist, imgname=img)
+def newimgselect(img):
+    session['imagename'] = img
+    return redirect('/visualize')
+
+@app.route('/visualize')
+def visualize():
+    return render_template('visualize.html', images=session['imagelist'], folder=session['folder'], imgname=session['imagename'])
+
 
 @app.route('/mpDetector')
 def mpDetector():
