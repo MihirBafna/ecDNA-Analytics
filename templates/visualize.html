@@ -162,9 +162,9 @@
             <h3> Select Image: </h3>
             {% for image in images %}
                 {% if image==imgname %}
-                    <a id="{{imgname}}" class="selected imglinks" href="/visualize/{{image}}">{{image}}</a>
+                    <a id="{{images}}" class="selected imglinks" href="/visualize/{{image}}">{{image}}</a>
                 {% else %}
-                    <a id="{{imgname}}" class="imglinks" href="/visualize/{{image}}">{{image}}</a>
+                    <a id="{{image}}" class="imglinks" href="/visualize/{{image}}">{{image}}</a>
                 {% endif %}
             {% endfor %}
         </div>
@@ -189,22 +189,22 @@
         <div class="container-fluid mycontainer">
             <div class="row myrow align-items-center">
                 <div class="col-4 mycol">
-                    <img id="orig" class="img-fluid images row1" src= "{{ '../static/img/ecSegOutput/orig/'+ imgname }}" alt="orig">
+                    <img id="orig" class="img-fluid images row1" src= "{{ '../static/img/ecSegOutput/'+folder+'/orig/'+ imgname }}" alt="orig">
                 </div>
                 <div class="col-4 mycol ">
-                    <img id="dapi" class="img-fluid images row1" src="{{ '../static/img/ecSegOutput/dapi2/'+ imgname }}" alt="dapi">
+                    <img id="dapi" class="img-fluid images row1" src="{{ '../static/img/testdata/dapi2/'+ imgname }}" alt="dapi">
                 </div>
                 <div class="col-4  mycol ">
-                    <img id="ecSeg" class="img-fluid images row1" src="{{ '../static/img/ecSegOutput/ecSeg/'+ imgname }}" alt="ecSeg">
+                    <img id="ecSeg" class="img-fluid images row1" src="{{ '../static/img/testdata/ecSeg/'+ imgname }}" alt="ecSeg">
                 </div>
             </div>
             <div class="row justify-content-around align-items-center myrow">
                 <div class="col-4 mycol">
-                    <img id="origZoom" class="zoomers img-fluid images" src="{{ '../static/img/ecSegOutput/orig/'+ imgname }}" > 
+                    <img id="origZoom" class="zoomers img-fluid images" src="{{ '../static/img/testdata/orig/'+ imgname }}" > 
                     <div class="image zoomers" id="origZoom"></div>
                 </div>
                 <div class="col-4 mycol">
-                    <img id="ecSegZoom" class="img-fluid images" src="{{ '../static/img/ecSegOutput/ecSeg/'+ imgname }}" alt="Park">
+                    <img id="ecSegZoom" class="img-fluid images" src="{{ '../static/img/testdata/ecSeg/'+ imgname }}" alt="Park">
                 </div>
             </div>
         </div>
