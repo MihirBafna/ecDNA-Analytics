@@ -8,9 +8,6 @@ app = Flask(__name__)
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-# session = dict()
-# session['folder']="this"
-# session['imagelist']=[]
 
 @app.route('/')
 def home():
@@ -21,18 +18,16 @@ def input():
     return render_template('input.html')
 
 
-app.config["IMAGE_UPLOADS"] = "/Users/MihirBafna/Documents/CS/Projects/ecDNA-Analytics/static/img"
+app.config["IMAGE_UPLOADS"] = "static/img"
 app.config["ALLOWED_INPUT_IMAGE_EXTENSIONS"] = ["TIF", "TIFF"]
 app.config["ALLOWED_OUTPUT_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "TIF", "TIFF"]
 
-def imglist(filepath):
-        # get image data after ecSeg is run
+def imglist(filepath):  # get image data after ecSeg is run
     print(os.listdir(filepath))
     imagelist = []
     for file in os.listdir(filepath):
         if file.endswith(".png"):
             imagelist.append(file)
-    print(imagelist[0])
     return(imagelist)
 
 def allowed_image(filename, inout):
@@ -73,7 +68,7 @@ def uploadInput():
     #
     #     imagelist = imglist((os.path.join(app.config["IMAGE_UPLOADS"], "ecSegOutput"+timestamped)))
     # return render_template('visualize.html'+'/'+str(imagelist[0]))
-    return ""
+    return redirect(request.url)
 
 @app.route('/uploadecSeg', methods=["GET","POST"])
 def uploadecSeg():
@@ -84,6 +79,10 @@ def uploadecSeg():
             folderpath = os.path.join(
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "orig")
             os.makedirs(folderpath)
+            os.mkdir(os.path.join(
+                app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "dapi2"))
+            os.mkdir(os.path.join(
+                app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "ecSeg"))
             for file in folder:
                 print(file.filename)
                 if file.filename == "":
@@ -91,23 +90,17 @@ def uploadecSeg():
                     return redirect(request.url)
                 if allowed_image(file.filename, False):
                     path = os.path.join(
-                        app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, file.filename)
+                        app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, '/'.join(file.filename.split('/')[1:]))
                     file.save(path)
                     print(file.filename+" saved")
                 else:
                     print("not allowed")
     path = os.path.join(app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "orig")+'/'
     session['folder']=timestamped
-    # imagelist = imglist(folderpath)
-    # print('../static/img/ecSegOutput/'+timestamped+'/orig/' + imagelist[0])
     session['imagelist'] = imglist(path)
     session['imagename'] = session['imagelist'][0]
     return redirect('/visualize')
 
-# @app.route('/visualize', defaults={'img': ""})
-# @app.route('/visualize/<folder>/<img>')
-# def visualize(folder, img):
-#     return render_template('visualize.html', images=imagelist, folder=folder, imgname=img)
 
 @app.route('/visualize/<img>')
 def newimgselect(img):
