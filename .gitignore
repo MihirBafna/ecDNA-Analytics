@@ -1,2 +1,3 @@
 .DS_Store
 testdata/
+__pycache__/
