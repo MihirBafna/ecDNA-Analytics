@@ -1,8 +1,15 @@
 from app import app
+from app import imagemanipulation as im
 from flask import render_template, redirect, request, session
 import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
+
+
+app.config["IMAGE_UPLOADS"] = "app/static/img"
+app.config["ALLOWED_INPUT_IMAGE_EXTENSIONS"] = ["TIF", "TIFF"]
+app.config["ALLOWED_OUTPUT_IMAGE_EXTENSIONS"] = [
+    "JPEG", "JPG", "PNG", "TIF", "TIFF"]
 
 @app.route('/')
 def home():
@@ -12,33 +19,6 @@ def home():
 @app.route('/input')
 def input():
     return render_template('input.html')
-
-
-app.config["IMAGE_UPLOADS"] = "app/static/img"
-app.config["ALLOWED_INPUT_IMAGE_EXTENSIONS"] = ["TIF", "TIFF"]
-app.config["ALLOWED_OUTPUT_IMAGE_EXTENSIONS"] = [
-    "JPEG", "JPG", "PNG", "TIF", "TIFF"]
-
-
-def imglist(filepath):  # get image data after ecSeg is run
-    print(os.listdir(filepath))
-    imagelist = []
-    for file in os.listdir(filepath):
-        if file.endswith(".png"):
-            imagelist.append(file)
-    return(imagelist)
-
-
-def allowed_image(filename, inout):
-    if not "." in filename:
-        return False
-    ext = filename.rsplit(".", 1)[1]
-    if inout and ext.upper() in app.config["ALLOWED_INPUT_IMAGE_EXTENSIONS"]:
-        return True
-    elif not inout and ext.upper() in app.config["ALLOWED_OUTPUT_IMAGE_EXTENSIONS"]:
-        return True
-    else:
-        return False
 
 
 @app.route('/uploadInput', methods=["GET", "POST"])
@@ -55,7 +35,7 @@ def uploadInput():
                 if file.filename == "":
                     print("ERROR: File has no filename")
                     return redirect(request.url)
-                if allowed_image(file.filename, True):
+                if im.allowed_image(file.filename, True):
                     path = os.path.join(
                         app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, file.filename)
                     file.save(path)
@@ -90,7 +70,7 @@ def uploadecSeg():
                 if file.filename == "":
                     print("ERROR: File has no filename")
                     return redirect(request.url)
-                if allowed_image(file.filename, False):
+                if im.allowed_image(file.filename, False):
                     path = os.path.join(
                         app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, '/'.join(file.filename.split('/')[1:]))
                     file.save(path)
@@ -100,7 +80,8 @@ def uploadecSeg():
     path = os.path.join(app.config["IMAGE_UPLOADS"],
                         "ecSegOutput", timestamped, "orig")+'/'
     session['folder'] = timestamped
-    session['imagelist'] = imglist(path)
+    im.tiffToPNG(timestamped)
+    session['imagelist'] = im.imglist(path)
     session['imagename'] = session['imagelist'][0]
     return redirect('/visualize')
 
