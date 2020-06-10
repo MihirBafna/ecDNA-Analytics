@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 HASHER_HASH = re.compile(r'^(\w+)=([a-f0-9]+)')
 CHARSET = re.compile(r';\s*charset\s*=\s*(.*)\s*$', re.I)
 HTML_CONTENT_TYPE = re.compile('text/html|application/x(ht)?ml')
-DEFAULT_INDEX = 'https://pypi.org/pypi'
+DEFAULT_INDEX = 'https://pypi.python.org/pypi'
 
 def get_all_distribution_names(url=None):
     """
@@ -197,7 +197,7 @@ class Locator(object):
         is_downloadable = basename.endswith(self.downloadable_extensions)
         if is_wheel:
             compatible = is_compatible(Wheel(basename), self.wheel_tags)
-        return (t.scheme == 'https', 'pypi.org' in t.netloc,
+        return (t.scheme == 'https', 'pypi.python.org' in t.netloc,
                 is_downloadable, is_wheel, compatible, basename)
 
     def prefer_url(self, url1, url2):
@@ -255,9 +255,7 @@ class Locator(object):
         if path.endswith('.whl'):
             try:
                 wheel = Wheel(path)
-                if not is_compatible(wheel, self.wheel_tags):
-                    logger.debug('Wheel not compatible: %s', path)
-                else:
+                if is_compatible(wheel, self.wheel_tags):
                     if project_name is None:
                         include = True
                     else:
@@ -304,25 +302,18 @@ class Locator(object):
 
     def _get_digest(self, info):
         """
-        Get a digest from a dictionary by looking at a "digests" dictionary
-        or keys of the form 'algo_digest'.
+        Get a digest from a dictionary by looking at keys of the form
+        'algo_digest'.
 
         Returns a 2-tuple (algo, digest) if found, else None. Currently
         looks only for SHA256, then MD5.
         """
         result = None
-        if 'digests' in info:
-            digests = info['digests']
-            for algo in ('sha256', 'md5'):
-                if algo in digests:
-                    result = (algo, digests[algo])
-                    break
-        if not result:
-            for algo in ('sha256', 'md5'):
-                key = '%s_digest' % algo
-                if key in info:
-                    result = (algo, info[key])
-                    break
+        for algo in ('sha256', 'md5'):
+            key = '%s_digest' % algo
+            if key in info:
+                result = (algo, info[key])
+                break
         return result
 
     def _update_version_data(self, result, info):
@@ -622,7 +613,6 @@ class SimpleScrapingLocator(Locator):
         # as it is for coordinating our internal threads - the ones created
         # in _prepare_threads.
         self._gplock = threading.RLock()
-        self.platform_check = False  # See issue #112
 
     def _prepare_threads(self):
         """
@@ -668,8 +658,8 @@ class SimpleScrapingLocator(Locator):
             del self.result
         return result
 
-    platform_dependent = re.compile(r'\b(linux_(i\d86|x86_64|arm\w+)|'
-                                    r'win(32|_amd64)|macosx_?\d+)\b', re.I)
+    platform_dependent = re.compile(r'\b(linux-(i\d86|x86_64|arm\w+)|'
+                                    r'win(32|-amd64)|macosx-?\d+)\b', re.I)
 
     def _is_platform_dependent(self, url):
         """
@@ -687,7 +677,7 @@ class SimpleScrapingLocator(Locator):
         Note that the return value isn't actually used other than as a boolean
         value.
         """
-        if self.platform_check and self._is_platform_dependent(url):
+        if self._is_platform_dependent(url):
             info = None
         else:
             info = self.convert_url_to_download_info(url, self.project_name)
@@ -1056,7 +1046,7 @@ class AggregatingLocator(Locator):
 # versions which don't conform to PEP 426 / PEP 440.
 default_locator = AggregatingLocator(
                     JSONLocator(),
-                    SimpleScrapingLocator('https://pypi.org/simple/',
+                    SimpleScrapingLocator('https://pypi.python.org/simple/',
                                           timeout=3.0),
                     scheme='legacy')
 

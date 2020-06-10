@@ -545,14 +545,16 @@ class FileOperator(object):
     def write_binary_file(self, path, data):
         self.ensure_dir(os.path.dirname(path))
         if not self.dry_run:
-            if os.path.exists(path):
-                os.remove(path)
             with open(path, 'wb') as f:
                 f.write(data)
         self.record_as_written(path)
 
     def write_text_file(self, path, data, encoding):
-        self.write_binary_file(path, data.encode(encoding))
+        self.ensure_dir(os.path.dirname(path))
+        if not self.dry_run:
+            with open(path, 'wb') as f:
+                f.write(data.encode(encoding))
+        self.record_as_written(path)
 
     def set_mode(self, bits, mask, files):
         if os.name == 'posix' or (os.name == 'java' and os._name == 'posix'):
@@ -580,7 +582,7 @@ class FileOperator(object):
             if self.record:
                 self.dirs_created.add(path)
 
-    def byte_compile(self, path, optimize=False, force=False, prefix=None, hashed_invalidation=False):
+    def byte_compile(self, path, optimize=False, force=False, prefix=None):
         dpath = cache_from_source(path, not optimize)
         logger.info('Byte-compiling %s to %s', path, dpath)
         if not self.dry_run:
@@ -590,10 +592,7 @@ class FileOperator(object):
                 else:
                     assert path.startswith(prefix)
                     diagpath = path[len(prefix):]
-            compile_kwargs = {}
-            if hashed_invalidation and hasattr(py_compile, 'PycInvalidationMode'):
-                compile_kwargs['invalidation_mode'] = py_compile.PycInvalidationMode.CHECKED_HASH
-            py_compile.compile(path, dpath, diagpath, True, **compile_kwargs)     # raise error
+            py_compile.compile(path, dpath, diagpath, True)     # raise error
         self.record_as_written(dpath)
         return dpath
 
@@ -703,7 +702,7 @@ class ExportEntry(object):
 
 ENTRY_RE = re.compile(r'''(?P<name>(\w|[-.+])+)
                       \s*=\s*(?P<callable>(\w+)([:\.]\w+)*)
-                      \s*(\[\s*(?P<flags>[\w-]+(=\w+)?(,\s*\w+(=\w+)?)*)\s*\])?
+                      \s*(\[\s*(?P<flags>\w+(=\w+)?(,\s*\w+(=\w+)?)*)\s*\])?
                       ''', re.VERBOSE)
 
 def get_export_entry(specification):
@@ -804,15 +803,11 @@ def ensure_slash(s):
 def parse_credentials(netloc):
     username = password = None
     if '@' in netloc:
-        prefix, netloc = netloc.rsplit('@', 1)
+        prefix, netloc = netloc.split('@', 1)
         if ':' not in prefix:
             username = prefix
         else:
             username, password = prefix.split(':', 1)
-    if username:
-        username = unquote(username)
-    if password:
-        password = unquote(password)
     return username, password, netloc
 
 
@@ -1438,8 +1433,7 @@ if ssl:
                                             ca_certs=self.ca_certs)
             else:  # pragma: no cover
                 context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-                if hasattr(ssl, 'OP_NO_SSLv2'):
-                    context.options |= ssl.OP_NO_SSLv2
+                context.options |= ssl.OP_NO_SSLv2
                 if self.cert_file:
                     context.load_cert_chain(self.cert_file, self.key_file)
                 kwargs = {}
