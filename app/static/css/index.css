@@ -1,0 +1,95 @@
+
+
+    .background{
+        width: 100%;
+        height: 100%;
+        /* background: rgba(49, 62, 73, 0.6); */
+        background: rgba(38, 47, 56, 0.8);
+        /* background: rgba(0,0,0,0.5); */
+    }
+    .btn{
+        border-color: rgb(24, 190, 255);
+        background: rgb(24, 190, 255);
+        color: #ffffff;
+    }
+    .btn:hover{
+        border-color: #ffffff;
+        color: #ffffff;
+        background: rgb(32, 42, 50,0.7);
+    }
+        /*
+    * Base structure
+    */
+
+    html,
+    body {
+    overflow: hidden;
+    height: 100%;
+    min-height: 100%;
+
+    }
+
+    body {
+    display: -ms-flexbox;
+    display: flex;
+    color: #fff;
+    text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+
+    }
+
+    .cover-container {
+    max-width: 42em;
+    
+    }
+    /*
+    * Cover
+    */
+    .cover {
+        /* border: 3px white solid; */
+        padding: 0 1.5rem;
+        height: 70%;
+    }
+    .cover .btn-lg {
+        padding: .75rem 1.25rem;
+        font-weight: 700;
+    }
+    .footer {
+        /* background-color: rgba(37, 193, 255, 0.6); */
+        /* border: 3px white solid; */
+        position: fixed;
+        /* left: 40%; */
+        bottom: 0px;
+        width: 100%;
+        justify-content: center;
+        height: 60px; 
+        line-height: 60px; 
+    }
+
+    .modal{
+        background-color: rgb(0,0,0,0.5);
+    }
+
+    .divider{
+        background: rgb(35, 41, 46,0.8);
+        height:30%;
+    }
+
+    .myrow{
+        /* border: #fff solid 3px; */
+        align-items: center;
+        height: 80%;
+    }
+    .card{
+        background: rgb(255,255,255,0.4);
+        height: 300px;
+    }
+    hr {
+        padding-top: 2px;
+        border: 0;
+        clear:both;
+        display:block;
+        width: 96%;               
+        background-color:#ffffff;
+        height: 1px;
+    }
