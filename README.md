@@ -56,7 +56,7 @@ source env/bin/activate
 flask run
 ```
 
-3. Developmental server will be running on https://localhost:5000 in your web browser
+3. Developmental server will be running on localhost:5000 in your web browser
 
 4. Once done using application, deactivate your virtual environment
 
