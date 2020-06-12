@@ -22,23 +22,27 @@ NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
 
 2. Navigate into repository and set up a virtual environment (conda is recommended)
     * Using conda:
+
     ```bash
     conda env create -f environment.yml
     source activate env 
     ```
+
     * Using pip:
+
     ```bash
     python3 -m venv env
     source env/bin/activate
     ```
+
 3. (For pip only) Recursively install all dependencies into your virtual environment (requirements.txt is provided)
 
     * Using pip:
+
     ```bash
      pip install -r requirements.txt
      ```
 
-       
 4. Setup flask developmental server
 
     ```bash
@@ -52,10 +56,13 @@ Whenever starting up the server, do the following:
 
 1. Activate your virtual environment
     * Using Conda:  
+
    ```bash
    source activate env 
    ```
+
     * Using pip:
+    
     ```bash
     source env/bin/activate
     ```
