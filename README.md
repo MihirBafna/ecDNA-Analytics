@@ -25,17 +25,19 @@ NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
     conda env create -f environment.yml
     ```
 3. Recursively install all dependencies into your virtual environment (requirements.txt is provided)
-
-  ```bash
-  pip install -r requirements.txt
-  ```
-
+    * Using Pip:
+    ```bash
+     pip install -r requirements.txt
+     ```
+    * Using Conda:
+    Skip this step
+       
 4. Setup flask developmental server
 
-  ```bash
-  export FLASK_ENV=run.py
-  export FLASK_APP=development
-  ```
+    ```bash
+    export FLASK_ENV=run.py
+    export FLASK_APP=development
+    ```
 
 ## Usage
 
@@ -43,20 +45,17 @@ Whenever starting up the server, do the following:
 
 1. Activate your virtual environment
 
-```bash
-source env/bin/activate
-```
+    ```bash
+    source env/bin/activate
+    ```
 
 2. Run application
 
-```bash
-flask run
-```
+    ```bash
+    flask run
+    ```
 
-3. Developmental server will be running on ``` localhost:5000 ``` in your web browser
+3. Developmental server will be running on ```localhost:5000``` in your web browser
 
-4. Once done using application, deactivate your virtual environment
+4. Once done using application, deactivate your virtual environment with either ```deactivate``` or ```conda deactivate```
 
-```bash
-deactivate
-```
