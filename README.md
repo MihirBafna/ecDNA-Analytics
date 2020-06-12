@@ -31,10 +31,8 @@ NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
     python3 -m venv env
     source env/bin/activate
     ```
-3. Recursively install all dependencies into your virtual environment (requirements.txt is provided)
-    * Using Conda:  
-        <sub>Skip this step</sub>
-    
+3. (For pip only) Recursively install all dependencies into your virtual environment (requirements.txt is provided)
+
     * Using pip:
     ```bash
      pip install -r requirements.txt
