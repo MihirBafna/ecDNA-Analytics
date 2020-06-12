@@ -49,7 +49,9 @@
             <div class="row justify-content-around align-items-center myrow">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                        <h3>Upload Images for ecSeg</h3>
+                        <a tabindex="0" id="firstinfo" class="material-icons info" role="button" data-placement="left" data-toggle="popover" data-trigger="focus"
+                            title="Uploading Input Images Info" data-message="Select a folder with images ready to be run by ecSeg and of the TIF/TIFF file format">&#xe88f;</a>
+                        <h3>Upload Images for ecSeg </h3>
                         <hr class='line'>
                         <form action="/uploadInput" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
@@ -65,7 +67,9 @@
                 </div>
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                        <h3>Upload ecSeg Output</h3>
+                        <a tabindex="0" id="secondinfo" class="material-icons info" role="button" data-toggle="popover" data-trigger="focus"
+                            title="Uploading ecSeg Output Info" data-message="Select a folder that has three directories inside with the names orig, dapi2, and ecSeg. There should be one image of each respective name in each of the three folders.">&#xe88f;</a>
+                        <h3>Upload ecSeg Output </h3>
                         <hr class='line'>
                         <form action="/uploadecSeg" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
@@ -90,5 +94,4 @@
 </div>
 
 <script src="../static/js/input.js"></script>
-
 {% endblock %}
