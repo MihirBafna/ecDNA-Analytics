@@ -71,9 +71,6 @@
         text-align: left;
     }
 
-    #firstinfo {
-        /* color: #000000 !important; */
-    }
     .info:hover{
         color: rgb(24, 190, 255);
 
