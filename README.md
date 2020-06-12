@@ -24,6 +24,7 @@ NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
     * Using conda:
     ```bash
     conda env create -f environment.yml
+    source activate env 
     ```
     * Using pip:
     ```bash
@@ -32,7 +33,7 @@ NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
     ```
 3. Recursively install all dependencies into your virtual environment (requirements.txt is provided)
     * Using Conda:  
-        Skip this step
+        <sub>Skip this step</sub>
     
     * Using pip:
     ```bash
@@ -52,7 +53,11 @@ NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
 Whenever starting up the server, do the following:
 
 1. Activate your virtual environment
-
+    * Using Conda:  
+   ```bash
+   source activate env 
+   ```
+    * Using pip:
     ```bash
     source env/bin/activate
     ```
