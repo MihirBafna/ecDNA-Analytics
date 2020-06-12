@@ -20,25 +20,22 @@ NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
 
 1. Clone this repository into a local folder of your choice
 
-2. Navigate into repository and set up a python virtual environment (recommended)
-
-```bash
-python3 -m venv env
-source env/bin/activate
-```
-
+2. Navigate into repository and set up a virtual environment (conda is recommended)
+    ```bash
+    conda env create -f environment.yml
+    ```
 3. Recursively install all dependencies into your virtual environment (requirements.txt is provided)
 
-```bash
-pip install -r requirements.txt
-```
+  ```bash
+  pip install -r requirements.txt
+  ```
 
 4. Setup flask developmental server
 
-```bash
-export FLASK_ENV=run.py
-export FLASK_APP=development
-```
+  ```bash
+  export FLASK_ENV=run.py
+  export FLASK_APP=development
+  ```
 
 ## Usage
 
