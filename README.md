@@ -46,8 +46,8 @@ NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
 4. Setup flask developmental server
 
     ```bash
-    export FLASK_ENV=run.py
-    export FLASK_APP=development
+    export FLASK_APP=run.py
+    export FLASK_ENV=development
     ```
 
 ## Usage
