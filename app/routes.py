@@ -6,11 +6,6 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 
 
-app.config["IMAGE_UPLOADS"] = "app/static/img"
-app.config["ALLOWED_INPUT_IMAGE_EXTENSIONS"] = ["TIF", "TIFF"]
-app.config["ALLOWED_OUTPUT_IMAGE_EXTENSIONS"] = [
-    "JPEG", "JPG", "PNG", "TIF", "TIFF"]
-
 @app.route('/')
 def home():
     return render_template('index.html')
