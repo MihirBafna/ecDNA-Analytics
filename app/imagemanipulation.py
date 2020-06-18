@@ -1,16 +1,31 @@
 from PIL import Image
 from app import app
 import os
+import shutil
+
+
+def reorganizeOutput(timestamped):
+    path = os.path.join("app/static/img/ecSegOutput/", timestamped)+'/'
+    origpath = os.path.join(path, "orig")+'/'
+    os.mkdir(origpath)
+    for file in os.listdir(path):
+        if file.endswith(".tif"):
+            shutil.move(path+file,origpath+file)
 
 def tiffToPNG(timestamped):
-    print(os.getcwd())
-    path = os.path.join("app/static/img/ecSegOutput/", timestamped, "dapi2")
+    path = os.path.join("app/static/img/ecSegOutput/", timestamped, "dapi")
     for file in os.listdir(path):
         if file.endswith(".tif"):
             im = Image.open(path+"/"+file)
             newim = file[:-3]+"png"
             im.save(path+"/"+newim)
     path = os.path.join("app/static/img/ecSegOutput/", timestamped, "orig")
+    for file in os.listdir(path):
+        if file.endswith(".tif"):
+            im = Image.open(path+"/"+file)
+            newim = file[:-3]+"png"
+            im.save(path+"/"+newim)
+    path = os.path.join("app/static/img/ecSegOutput/", timestamped, "labels")
     for file in os.listdir(path):
         if file.endswith(".tif"):
             im = Image.open(path+"/"+file)
@@ -31,9 +46,11 @@ def allowed_image(filename, inout):
 
 
 def imglist(filepath):  # get image data after ecSeg is run
-    print(os.listdir(filepath))
     imagelist = []
     for file in os.listdir(filepath):
         if file.endswith(".png"):
             imagelist.append(file)
     return(imagelist)
+
+
+

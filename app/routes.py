@@ -1,9 +1,11 @@
 from app import app
 from app import imagemanipulation as im
+from app import tools
 from flask import render_template, redirect, request, session
 import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
+
 
 
 @app.route('/')
@@ -23,7 +25,7 @@ def uploadInput():
             folder = request.files.getlist("input-folder-2[]")
             timestamped = datetime.now().strftime('%Y-%m-%d_%H%M%S')
             folderpath = os.path.join(
-                app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "orig")
+                app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped)
             os.makedirs(folderpath)
             for file in folder:
                 print(file.filename)
@@ -32,19 +34,22 @@ def uploadInput():
                     return redirect(request.url)
                 if im.allowed_image(file.filename, True):
                     path = os.path.join(
-                        app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, file.filename)
+                        app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, '/'.join(file.filename.split('/')[1:]))
                     file.save(path)
-                    print("Image saved" + path)
+                    print("Image saved " + path)
                 else:
                     print("not allowed")
     # RUN ECSEG HERE
-    # *
-    # *
-    # *
-    #
-    #     imagelist = imglist((os.path.join(app.config["IMAGE_UPLOADS"], "ecSegOutput"+timestamped)))
-    # return render_template('visualize.html'+'/'+str(imagelist[0]))
-    return redirect(request.url)
+    tools.runecSeg(folderpath,1)
+    im.reorganizeOutput(timestamped)
+    path = os.path.join(app.config["IMAGE_UPLOADS"],
+                        "ecSegOutput", timestamped, "orig")+'/'
+    session['folder'] = timestamped
+    im.tiffToPNG(timestamped)
+    session['imagelist'] = im.imglist(path)
+    session['imagename'] = session['imagelist'][0]
+    return redirect('/visualize')
+
 
 
 @app.route('/uploadecSeg', methods=["GET", "POST"])
@@ -57,11 +62,10 @@ def uploadecSeg():
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "orig")
             os.makedirs(folderpath)
             os.mkdir(os.path.join(
-                app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "dapi2"))
+                app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "dapi"))
             os.mkdir(os.path.join(
-                app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "ecSeg"))
+                app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "labels"))
             for file in folder:
-                print(file.filename)
                 if file.filename == "":
                     print("ERROR: File has no filename")
                     return redirect(request.url)
@@ -71,7 +75,7 @@ def uploadecSeg():
                     file.save(path)
                     print(file.filename+" saved")
                 else:
-                    print("not allowed")
+                    print(file.filename+" not allowed")
     path = os.path.join(app.config["IMAGE_UPLOADS"],
                         "ecSegOutput", timestamped, "orig")+'/'
     session['folder'] = timestamped
