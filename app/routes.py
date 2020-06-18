@@ -76,6 +76,7 @@ def uploadecSeg():
                     print(file.filename+" saved")
                 else:
                     print(file.filename+" not allowed")
+    im.reorganizeOutput(timestamped)
     path = os.path.join(app.config["IMAGE_UPLOADS"],
                         "ecSegOutput", timestamped, "orig")+'/'
     session['folder'] = timestamped
