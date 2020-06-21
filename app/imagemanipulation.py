@@ -2,6 +2,7 @@ from PIL import Image
 from app import app
 import os
 import shutil
+import zipfile
 
 
 def reorganizeOutput(timestamped):
@@ -52,5 +53,23 @@ def imglist(filepath):  # get image data after ecSeg is run
             imagelist.append(file)
     return(imagelist)
 
+def compressImg(name, path, folder):
+        # zipper = zipfile.ZipFile(name[:-4]+'.zip' , "w")
+    # # zipper.write(os.path.join(path))
+    # print(path)
+    # print(os.listdir(path))
+    # for directory in os.listdir(path):        
+    #     print(directory)
+    #     print(os.listdir(os.path.join(path, directory)))
+    #     # zipper.write(directory)
+    #     for file in os.listdir(os.path.join(path,directory)):
+    #         print(os.path.join(directory, file))
+    #         zipper.write(os.path.join(directory,file))
+    #     #     for file in files:
+    #     #         zipper.write(os.path.join(directory,direct,file))
+    #     #     print(os.path.join(directory, file))
+    # zipper.close()
+    return
 
-
+def compressAll():
+    return
