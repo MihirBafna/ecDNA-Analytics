@@ -23,6 +23,7 @@
         <div id="mySidenav" class="sidenav">
             <a id="closebtn" href="javascript:void(0)" class="closebtn">&times;</a>
             <h3> Select Image: </h3>
+            <hr class="line2">
             {% for image in images %}
                 {% if image==imgname %}
                     <a id="{{images}}" class="selected imglinks" href="/visualize/{{image}}">{{image}}</a>
@@ -30,6 +31,8 @@
                     <a id="{{image}}" class="imglinks" href="/visualize/{{image}}">{{image}}</a>
                 {% endif %}
             {% endfor %}
+            <hr class="line2">
+            <a href="/downloadIMG/{{imgname}}/{{folder}}" ><button class="btn btn-primary">Download All</button></a>
         </div>
         <header class="masthead mb-auto">
             <div class="inner">

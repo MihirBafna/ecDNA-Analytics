@@ -93,7 +93,6 @@ def newimgselect(img):
 
 
 
-
 @app.route('/visualize')
 def visualize():
     return render_template('visualize.html', images=session['imagelist'], folder=session['folder'], imgname=session['imagename'])
