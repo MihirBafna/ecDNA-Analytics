@@ -8,6 +8,7 @@ class Config(object):
     ALLOWED_OUTPUT_IMAGE_EXTENSIONS = ["JPEG", "JPG", "PNG", "TIF", "TIFF"]
 
     IMAGE_UPLOADS = "app/static/img"
+    IMAGE_DOWNLOADS = "app/static/client/img"
     # ECSEG_LOCATION = "/Users/MihirBafna/Documents/CS/Projects/ecSeg"
     # METADETECT_LOCATION=""
 
