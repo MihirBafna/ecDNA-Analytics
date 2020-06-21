@@ -1,7 +1,7 @@
 from app import app
 from app import imagemanipulation as im
 from app import tools
-from flask import render_template, redirect, request, session
+from flask import render_template, redirect, request, session, send_from_directory, abort
 import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -76,7 +76,7 @@ def uploadecSeg():
                     print(file.filename+" saved")
                 else:
                     print(file.filename+" not allowed")
-    im.reorganizeOutput(timestamped)
+    # im.reorganizeOutput(timestamped)
     path = os.path.join(app.config["IMAGE_UPLOADS"],
                         "ecSegOutput", timestamped, "orig")+'/'
     session['folder'] = timestamped
@@ -92,10 +92,25 @@ def newimgselect(img):
     return redirect('/visualize')
 
 
+
+
 @app.route('/visualize')
 def visualize():
     return render_template('visualize.html', images=session['imagelist'], folder=session['folder'], imgname=session['imagename'])
 
+
+
+
+@app.route('/downloadIMG/<img>/<folder>')
+def downloadIMG(img,folder):   
+    try:
+        path = os.path.join(app.config["IMAGE_UPLOADS"],
+                                   "ecSegOutput", folder)+'/'
+        im.compressImg(img,path, folder)
+        # return send_from_directory(app.config["IMAGE_UPLOADS"])
+        return ""
+    except FileNotFoundError:
+        abort(404)
 
 @app.route('/mpDetector')
 def mpDetector():
