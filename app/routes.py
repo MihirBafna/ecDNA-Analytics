@@ -99,6 +99,14 @@ def visualize():
     return render_template('visualize.html', images=session['imagelist'], folder=session['folder'], imgname=session['imagename'])
 
 
+@app.route('/directvisualize/<folder>')
+def directVisualize(folder):
+    path = os.path.join(app.config["IMAGE_UPLOADS"],
+                        "ecSegOutput", folder, "orig")+'/'
+    session['folder'] = folder
+    session['imagelist'] = im.imglist(path)
+    session['imagename'] = session['imagelist'][0]
+    return redirect('/visualize')
 
 
 @app.route('/downloadIMG/<img>/<folder>')
