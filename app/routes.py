@@ -28,6 +28,11 @@ def uploadInput():
             folderpath = os.path.join(
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped)
             os.makedirs(folderpath)
+            if os.path.exists(folderpath): # check if folder is correct here
+                flash(f'Folder has been selected.', 'success')
+            else:
+                flash(f'Invalid folder. Folder name {folder} not recognized.', 'danger')
+                return render_template('input.html')
             for file in folder:
                 print(file.filename)
                 if file.filename == "":
@@ -68,6 +73,11 @@ def uploadecSeg():
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "dapi"))
             os.mkdir(os.path.join(
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "labels"))
+            if os.path.exists(folderpath): #check if folder is correct here
+                flash(f'Folder has been selected.', 'success')
+            else:
+                flash(f'Invalid folder. Folder name {folder} not recognized.', 'danger')
+                return render_template('input.html')
             for file in folder:
                 if file.filename == "":
                     print("ERROR: File has no filename")
