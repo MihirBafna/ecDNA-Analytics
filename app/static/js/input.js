@@ -1,3 +1,4 @@
+$(this).siblings(".custom-file-label").css("color", "rgb(0,0,0,0.3)");
 $("#disabled").click(function () {
     alert("Upload image folder first before visualizing")
 });
