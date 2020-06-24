@@ -80,8 +80,12 @@ def correctOutputFolderStructure(path):
     return orig and dapi and labels and onum == dnum == lnum != 0
 
 def correctInputFolderStructure(path):
-    return
-
+    directory = os.listdir(path)
+    print(directory)
+    for file in directory:
+        if file.endswith(".tif"):
+            return True
+    return False
 
 def compressImg(name, path, folder):
         # zipper = zipfile.ZipFile(name[:-4]+'.zip' , "w")

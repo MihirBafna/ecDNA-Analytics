@@ -29,11 +29,7 @@ def uploadInput():
             folderpath = os.path.join(
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped)
             os.makedirs(folderpath)
-            if os.path.exists(folderpath): # check if folder is correct here
-                flash(f'Folder has been selected.', 'success')
-            else:
-                flash(f'Invalid folder. Folder name {folder} not recognized.', 'danger')
-                return render_template('input.html')
+            print(folderpath)
             for file in folder:
                 print(file.filename)
                 if file.filename == "":
@@ -46,6 +42,16 @@ def uploadInput():
                     print("Image saved " + path)
                 else:
                     print("not allowed")
+        # check if folder is correct here
+        if im.correctInputFolderStructure(folderpath):
+            flash(f'Folder {timestamped} has been created and visualized.', 'success')
+        else:
+            try:
+                shutil.rmtree(folderpath)
+                flash(f'Invalid folder. Folder name {timestamped} could not be created and visualized. Check for proper input folder format.', 'danger')
+            except OSError as e:
+                print("Error: %s : %s" % (folderpath, e.strerror))
+            return render_template('input.html')
         # RUN ECSEG HERE
         tools.runecSeg(folderpath,1)
         im.reorganizeOutput(timestamped)
@@ -93,7 +99,7 @@ def uploadecSeg():
         else:
             try:
                 shutil.rmtree(directorypath)
-                flash(f'Invalid folder. Folder name {timestamped} could not be created and visualized. Check for proper folder format.', 'danger')
+                flash(f'Invalid folder. Folder name {timestamped} could not be created and visualized. Check for proper output folder format.', 'danger')
             except OSError as e:
                 print("Error: %s : %s" % (directorypath, e.strerror))
             return render_template('input.html')
