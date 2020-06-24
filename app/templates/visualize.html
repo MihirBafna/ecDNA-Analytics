@@ -22,7 +22,7 @@
     <div class="cover-container d-flex p-3 mx-auto flex-column">
         <div id="mySidenav" class="sidenav">
             <a id="closebtn" href="javascript:void(0)" class="closebtn">&times;</a>
-            <h3> Select Image: </h3>
+            <h6> Folder: {{folder}} </h6>
             <hr class="line2">
             {% for image in images %}
                 {% if image==imgname %}
@@ -74,11 +74,11 @@
                 </div>
             </div>
         </div>
-        <!-- <footer class="footer justify-content-center mt-auto">
+        <footer class="footer justify-content-center mt-auto">
             <div class="inner">
                 <p class="gray">Visualizer created by <a href="https://github.com/MihirBafna">Mihir Bafna</a></p>
             </div>
-        </footer> -->
+        </footer>
     </div>
 </div>
 
