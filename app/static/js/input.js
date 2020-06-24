@@ -27,3 +27,13 @@ $('#secondinfo').popover({
         return '<div class="popover-message">' + $(this).data("message") + '</div>';
     }
 });
+$('#thirdinfo').popover({
+    container: "body",
+    html: true,
+    title: function () {
+        return $("#thirdinfo").html();
+    },
+    content: function () {
+        return '<div class="popover-message">' + $(this).data("message") + '</div>';
+    }
+});
