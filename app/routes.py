@@ -6,6 +6,7 @@ import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from flask.helpers import flash
+import shutil
 
 
 
@@ -66,18 +67,15 @@ def uploadecSeg():
         if request.files:
             folder = request.files.getlist("input-folder-3[]")
             timestamped = datetime.now().strftime('%Y-%m-%d_%H%M%S')
-            folderpath = os.path.join(
+            directorypath = os.path.join(
+                app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped)
+            origpath = os.path.join(
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "orig")
-            os.makedirs(folderpath)
+            os.makedirs(origpath)
             os.mkdir(os.path.join(
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "dapi"))
             os.mkdir(os.path.join(
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "labels"))
-            if os.path.exists(folderpath): #check if folder is correct here
-                flash(f'Folder has been selected.', 'success')
-            else:
-                flash(f'Invalid folder. Folder name {folder} not recognized.', 'danger')
-                return render_template('input.html')
             for file in folder:
                 if file.filename == "":
                     print("ERROR: File has no filename")
@@ -89,11 +87,19 @@ def uploadecSeg():
                     print(file.filename+" saved")
                 else:
                     print(file.filename+" not allowed")
-        # im.reorganizeOutput(timestamped)
+        im.tiffToPNG(timestamped)
+        if im.correctOutputFolderStructure(directorypath):  # check if folder is correct here
+            flash(f'Folder {timestamped} has been created and visualized.', 'success')
+        else:
+            try:
+                shutil.rmtree(directorypath)
+                flash(f'Invalid folder. Folder name {timestamped} could not be created and visualized. Check for proper folder format.', 'danger')
+            except OSError as e:
+                print("Error: %s : %s" % (directorypath, e.strerror))
+            return render_template('input.html')
         path = os.path.join(app.config["IMAGE_UPLOADS"],
                             "ecSegOutput", timestamped, "orig")+'/'
         session['folder'] = timestamped
-        im.tiffToPNG(timestamped)
         session['imagelist'] = im.imglist(path)
         session['imagename'] = session['imagelist'][0]
         return redirect('/visualize')
@@ -120,7 +126,7 @@ def directVisualize():
         print(folder)
         path = os.path.join(app.config["IMAGE_UPLOADS"],"ecSegOutput", folder, "orig")+'/'
         if os.path.exists(path):
-            flash(f'Folder {folder} has been selected.', 'success')
+            flash(f'Folder {folder} was visualized.', 'success')
             session['folder'] = folder
             session['imagelist'] = im.imglist(path)
             session['imagename'] = session['imagelist'][0]
