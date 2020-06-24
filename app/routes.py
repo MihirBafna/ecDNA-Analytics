@@ -143,8 +143,8 @@ def downloadIMG(img,folder):
         abort(404)
 
 @app.route('/mpDetector')
-def mpDetector():
-    return render_template('mpDetector.html')
+def metaDetect():
+    return render_template('index.html')
 
 
 
