@@ -44,7 +44,7 @@ def uploadInput():
                     print("not allowed")
         # check if folder is correct here
         if im.correctInputFolderStructure(folderpath):
-            flash(f'Folder {timestamped} has been created and visualized.', 'success')
+            flash(f'ecSeg has been run succesfully. Folder {timestamped} has been created and visualized. Save this name for future reference.', 'success')
         else:
             try:
                 shutil.rmtree(folderpath)
@@ -95,7 +95,7 @@ def uploadecSeg():
                     print(file.filename+" not allowed")
         im.tiffToPNG(timestamped)
         if im.correctOutputFolderStructure(directorypath):  # check if folder is correct here
-            flash(f'Folder {timestamped} has been created and visualized.', 'success')
+            flash(f'Folder {timestamped} has been created and visualized. Save this name for future reference.', 'success')
         else:
             try:
                 shutil.rmtree(directorypath)
@@ -132,7 +132,8 @@ def directVisualize():
         print(folder)
         path = os.path.join(app.config["IMAGE_UPLOADS"],"ecSegOutput", folder, "orig")+'/'
         if os.path.exists(path):
-            flash(f'Folder {folder} was visualized.', 'success')
+            flash(
+                f'Folder {folder} was visualized.', 'success')
             session['folder'] = folder
             session['imagelist'] = im.imglist(path)
             session['imagename'] = session['imagelist'][0]
