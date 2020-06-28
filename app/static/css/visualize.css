@@ -72,8 +72,31 @@
         left: 0;
         background-color: rgba(14, 24, 36, 0.95); /* Black*/
         overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 60px; /*Place content 60px from the top*/
+        transition: 0.3s; /* 0.5 second transition effect to slide in the sidenav */
+    }
+
+    .toolsidenav {
+        height: 100%; /* 100% Full-height */
+        width: 0; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 6; /* Stay on top */
+        top: 0; /* Stay at the top */
+        right: 0;
+        background-color: rgba(14, 24, 36, 0.95); /* Black*/
+        overflow-x: hidden; /* Disable horizontal scroll */
         padding-top: 60px; /* Place content 60px from the top */
         transition: 0.3s; /* 0.5 second transition effect to slide in the sidenav */
+    }
+    .toolsidenav .closebtn {
+        position: absolute;
+        top: 0;
+        left: 16px;
+        font-size: 20px;
+    }
+
+    .toolsidenav .closebtn:hover {
+        color: rgb(24, 190, 255);
     }
 
         /* The navigation menu links */
@@ -116,6 +139,16 @@
     }
 
     .imageselect:hover{
+        color: rgb(24, 190, 255);
+    }
+    .toolselect{
+        position: absolute;
+        right:20px;
+        top: 25px;
+        cursor: pointer;
+    }
+
+    .toolselect:hover{
         color: rgb(24, 190, 255);
     }
     .sub{
