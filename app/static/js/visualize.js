@@ -4,6 +4,7 @@ $(document).ready(function () {
     var dapi = false;
     var ecSeg = false;
     var rowwidth = $(".myrow").width();
+    var dapiorigvalue = 0;
     initialize();
     $(window).mousemove(function (event) {
         rowwidth = $(".myrow").width();
@@ -234,5 +235,28 @@ $(document).ready(function () {
             "width": "0px"
         })
     });
+
+    $("#toolbtn").click(function () {
+        $("#toolnav").css({
+            "width": "200px",
+        })
+    });
+    $("#closetoolnav").click(function () {
+        $("#toolnav").css({
+            "width": "0px",
+        })
+    });
+
+    $("#origdapi").click(function () {
+        dapiorigvalue = (dapiorigvalue + 1) % 2;
+        var origpath = $('#orig').attr('src');
+        var dapipath = $('#dapi').attr('src');
+        if(dapiorigvalue==1){
+            $("#origZoom").attr("src", dapipath);
+        }else{
+            $("#origZoom").attr("src", origpath);
+        }
+    });  
+
 
 });
