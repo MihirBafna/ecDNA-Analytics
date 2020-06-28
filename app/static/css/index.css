@@ -78,7 +78,7 @@
     .myrow{
         /* border: #fff solid 3px; */
         align-items: center;
-        height: 80%;
+        height: 70%;
     }
     .card{
         background: rgb(255,255,255,0.4);
@@ -92,4 +92,12 @@
         width: 96%;               
         background-color:#ffffff;
         height: 1px;
+    }
+
+    #up{
+        width: auto;
+    }
+    #up:hover{
+        color: rgb(24, 190, 255);
+        cursor: pointer;
     }
