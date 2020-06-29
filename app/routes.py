@@ -153,9 +153,24 @@ def downloadAll(folder):
         filename = final.split('/')[-1]
         outpath = '/'.join(final.split('/')[1:-1])
         print(outpath,filename)
-        send_from_directory(outpath, filename=filename, as_attachment=True)
+        return send_from_directory(outpath, filename=filename, as_attachment=True)
     except FileNotFoundError:
         abort(404)
+
+
+@app.route('/downloadIMG/<folder>/<imgname>')
+def downloadIMG(imgname, folder):
+    try:
+        path = os.path.join(app.config["IMAGE_UPLOADS"],
+                            "ecSegOutput", folder)+'/'
+        final = im.compressIMG(path, imgname)
+        filename = final.split('/')[-1]
+        outpath = '/'.join(final.split('/')[1:-1])
+        print(outpath, filename)
+        return send_from_directory(outpath, filename=filename, as_attachment=True)
+    except FileNotFoundError:
+        abort(404)
+
 
 @app.route('/mpDetector')
 def metaDetect():

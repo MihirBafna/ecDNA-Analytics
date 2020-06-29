@@ -32,7 +32,11 @@
                 {% endif %}
             {% endfor %}
             <hr class="line2">
-            <a href="/downloadAll/{{folder}}" ><button class="btn btn-primary">Download All</button></a>
+            <div class="row justify-content-left">
+                <a href="/downloadIMG/{{folder}}/{{imgname}}"><button class="btn btn-primary">Download IMG</button></a>
+                <a href="/downloadAll/{{folder}}"><button class="btn btn-primary">Download All</button></a>
+                <a href="/clear/{{folder}}"><button class="btn btn-primary">Clear</button></a>
+            </div>
         </div>
         <div id="toolnav" class="toolsidenav selected">
             <a id="closetoolnav" href="javascript:void(0)" class="closebtn">&times;</a>

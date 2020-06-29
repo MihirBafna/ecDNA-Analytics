@@ -99,8 +99,18 @@ def compressAll(path, folder):
     move(filename, final)
     return final
 
-def compressIMG():
-    return
+def compressIMG(path, name):
+    filename = name[:-4]+'.zip'
+    with zipfile.ZipFile(filename, "w") as zipper:
+        for folderName, subfolders, filenames in os.walk(path):
+            for file in filenames:
+                filePath = os.path.join(folderName, file)
+                basepath = '/'.join(filePath.split('/')[-2:])
+                if file[:-4] == name[:-4]:
+                    zipper.write(filePath, basepath)
+    final = os.path.join("app/static/client/img/", filename)
+    move(filename,final)
+    return final
 
 def move(initial,final):
     command = f"mv {initial} {final}"
