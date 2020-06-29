@@ -25,7 +25,7 @@
         transform: translate(-50%,-50%);
         z-index: 5;
     }
-    .btn{
+    .btn-primary{
         border-color: rgb(24, 190, 255);
         background: rgb(24, 190, 255);
         color: #ffffff;
@@ -88,19 +88,26 @@
         padding-top: 60px; /* Place content 60px from the top */
         transition: 0.3s; /* 0.5 second transition effect to slide in the sidenav */
     }
+
+    .toolsidenav a{
+        display: block;
+        padding: 5px;
+        margin-left: 25px;
+        margin-top: 5px;
+        width: 50px;
+        transition: 0.3s;
+    }
     .toolsidenav .closebtn {
         text-decoration: none;
         position: absolute;
         top: 0;
-        left: 16px;
+        left: 8px;
         font-size: 20px;
     }
-
     .toolsidenav .closebtn:hover {
         color: rgb(24, 190, 255);
+        cursor: pointer;
     }
-
-        /* The navigation menu links */
     .sidenav a {
         margin-left: 20px;
         padding: 5px;
@@ -174,4 +181,13 @@
         width: 100%;               
         background-color:#ffffff;
         height: 1px;
+    }
+
+    .inbtn{
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .tooltip {
+        pointer-events: none; 
     }

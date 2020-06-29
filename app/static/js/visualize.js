@@ -238,7 +238,7 @@ $(document).ready(function () {
 
     $("#toolbtn").click(function () {
         $("#toolnav").css({
-            "width": "200px",
+            "width": "100px",
         })
     });
     $("#closetoolnav").click(function () {
@@ -257,6 +257,8 @@ $(document).ready(function () {
             $("#origZoom").attr("src", origpath);
         }
     });  
+
+    $('[data-toggle="tooltip"]').tooltip()
 
 
 });

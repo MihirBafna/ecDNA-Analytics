@@ -32,21 +32,18 @@
                 {% endif %}
             {% endfor %}
             <hr class="line2">
-            <div class="row justify-content-left">
-                <a href="/downloadIMG/{{folder}}/{{imgname}}"><button class="btn btn-primary">Download IMG</button></a>
-                <a href="/downloadAll/{{folder}}"><button class="btn btn-primary">Download All</button></a>
-                <a href="/clear/{{folder}}"><button class="btn btn-primary">Clear</button></a>
-            </div>
         </div>
         <div id="toolnav" class="toolsidenav selected">
-            <a id="closetoolnav" href="javascript:void(0)" class="closebtn">&times;</a>
-            <h6> Toolbar </h6>
-            <hr class="line2">
-            <a id="origdapi" class="btn btn-primary">orig/dapi toggle</a>
+            <span id="closetoolnav" href="javascript:void(0)" class="closebtn">&times;</span>
+            <a id="origdapi" class="btn btn-primary material-icons inbtn" data-toggle="tooltip" data-placement="right" title="Toggle orig/dapi zoom">&#xe3b9;</a>
+            <a href="#" class="btn btn-primary material-icons inbtn" data-toggle="tooltip" data-placement="right" title="Annotate ecDNA">create</a>            
+            <a href="/downloadIMG/{{folder}}/{{imgname}}" class="btn btn-primary material-icons inbtn" data-toggle="tooltip" data-placement="right" title="Download Image">image</a>
+            <a href="/downloadAll/{{folder}}" class="btn btn-primary material-icons inbtn" data-toggle="tooltip" data-placement="right" title="Download Image Folder">&#xe2c7;</a>
+            <a href="/clear/" class="btn btn-danger material-icons inbtn" data-toggle="tooltip" data-placement="right" title="Clear client cache on server">delete</a>
         </div>
         <header class="masthead mb-auto">
             <div class="inner">
-                <h3 id="menubtn" class="nav nav-masthead imageselect" data-toggle="tooltip" title="Select Image" ><i class="material-icons" style="font-size:45px">&#xe060;</i></h3>
+                <h3 id="menubtn" class="nav nav-masthead imageselect" data-toggle="tooltip" data-placement="right" title="Select Image" ><i class="material-icons" style="font-size:45px">&#xe060;</i></h3>
                 <h2 class="masthead-brand">ecDNA Analytics: </h2>
                 <h2 class="masthead-brand sub"> ecSeg</h2>
                 <nav class="nav nav-masthead justify-content-center">
@@ -54,7 +51,7 @@
                     <a class="nav-link" href="/input">Input</a>
                     <a class="nav-link active" href="/visualize">Visualize</a>
                 </nav>
-                <h3 id="toolbtn" class="nav nav-masthead toolselect" data-toggle="tooltip" title="Toolbar"><i class="material-icons" style="font-size:30px">&#xe869;</i></h3>
+                <h3 id="toolbtn" class="nav nav-masthead toolselect" data-placement="left" data-toggle="tooltip" title="Toolbar"><i class="material-icons" style="font-size:30px">&#xe869;</i></h3>
             </div>
         </header>
     <hr class="line">
