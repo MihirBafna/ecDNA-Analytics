@@ -89,6 +89,7 @@
         transition: 0.3s; /* 0.5 second transition effect to slide in the sidenav */
     }
     .toolsidenav .closebtn {
+        text-decoration: none;
         position: absolute;
         top: 0;
         left: 16px;
