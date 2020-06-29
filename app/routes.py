@@ -144,14 +144,16 @@ def directVisualize():
     else:
         return render_template('input.html')
 
-@app.route('/downloadIMG/<img>/<folder>')
-def downloadIMG(img,folder):   
-    try:
+@app.route('/downloadAll/<folder>')
+def downloadAll(folder):
+    try:   
         path = os.path.join(app.config["IMAGE_UPLOADS"],
-                                   "ecSegOutput", folder)+'/'
-        im.compressImg(img,path, folder)
-        # return send_from_directory(app.config["IMAGE_UPLOADS"])
-        return ""
+                                    "ecSegOutput", folder)+'/'
+        final = im.compressAll(path, folder)
+        filename = final.split('/')[-1]
+        outpath = '/'.join(final.split('/')[1:-1])
+        print(outpath,filename)
+        send_from_directory(outpath, filename=filename, as_attachment=True)
     except FileNotFoundError:
         abort(404)
 

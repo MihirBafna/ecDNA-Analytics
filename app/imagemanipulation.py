@@ -3,7 +3,7 @@ from app import app
 import os
 import shutil
 import zipfile
-
+import subprocess
 
 def reorganizeOutput(timestamped):
     path = os.path.join("app/static/img/ecSegOutput/", timestamped)+'/'
@@ -87,23 +87,25 @@ def correctInputFolderStructure(path):
             return True
     return False
 
-def compressImg(name, path, folder):
-        # zipper = zipfile.ZipFile(name[:-4]+'.zip' , "w")
-    # # zipper.write(os.path.join(path))
-    # print(path)
-    # print(os.listdir(path))
-    # for directory in os.listdir(path):        
-    #     print(directory)
-    #     print(os.listdir(os.path.join(path, directory)))
-    #     # zipper.write(directory)
-    #     for file in os.listdir(os.path.join(path,directory)):
-    #         print(os.path.join(directory, file))
-    #         zipper.write(os.path.join(directory,file))
-    #     #     for file in files:
-    #     #         zipper.write(os.path.join(directory,direct,file))
-    #     #     print(os.path.join(directory, file))
-    # zipper.close()
+def compressAll(path, folder):
+    filename = folder+'.zip'
+    with zipfile.ZipFile(filename, "w") as zipper:
+        for folderName, subfolders, filenames in os.walk(path):
+            for file in filenames:
+                filePath = os.path.join(folderName, file)
+                basepath = '/'.join(filePath.split('/')[-2:])
+                zipper.write(filePath, basepath)
+    final = os.path.join("app/static/client/img/",filename)
+    move(filename, final)
+    return final
+
+def compressIMG():
     return
 
-def compressAll():
-    return
+def move(initial,final):
+    command = f"mv {initial} {final}"
+    subprocess.run(command.split())
+
+def remove(path):
+    command = f"rm {path}"
+    subprocess.run(command.split())
