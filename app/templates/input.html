@@ -57,9 +57,9 @@
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h3><i class="material-icons">filter_1</i></h3>
-                        <h3>Upload Images for ecSeg <a tabindex="0" style="color: white;" id="firstinfo" class="material-icons info" role="button" data-placement="left"
+                        <h3>Upload Images for ecSeg <span tabindex="0" id="firstinfo" class="material-icons info" role="button" data-placement="left"
                             data-toggle="popover" data-trigger="focus" title="Uploading Input Images Info"
-                            data-message="Select a folder with images ready to be run by ecSeg and of the .tif file format">&#xe8fd;</a> </h3>
+                            data-message="To run ecSeg, select a folder containing input images (DAPI / FISH metaphase spreads, TIF only). After ecSeg is run, the output images will be visualized. Save the timestamped folder name for future reference.">&#xe8fd;</span> </h3>
                         <hr class='line'>
                         <form action="/uploadInput" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
@@ -76,9 +76,9 @@
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h3><i class="material-icons">filter_2</i></h3>
-                        <h3>Upload ecSeg Output <a tabindex="0" style="color: white;" id="secondinfo" class="material-icons info" role="button" data-toggle="popover"
+                        <h3>Upload ecSeg Output <span tabindex="0" id="secondinfo" class="material-icons info" role="button" data-toggle="popover"
                         data-trigger="focus" title="Uploading ecSeg Output Info"
-                        data-message="Select a folder that has the same structure as the ecSeg output (labels folder and a dapi folder), as well as the original images either in the directory selected or a subdirectory named orig.">&#xe8fd;</a></h3>
+                        data-message="To visualize ecSeg output, select a directory containing subdirectories named 'labels', 'dapi', and optionally 'orig (all subdirectories must contain the same number of images with matching filenames). If the directory does not have an 'orig' folder, one will be created as long as the original images are located in the chosen directory. Once visualized, save the timestamped folder name for future reference.">&#xe8fd;</span></h3>
                         <hr class='line'>
                         <form action="/uploadecSeg" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
@@ -95,9 +95,9 @@
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h3><i class="material-icons">filter_3</i></h3>
-                        <h3>Visualize by Folder Name <a tabindex="0" style="color: white;" id="thirdinfo" class="material-icons info" role="button" data-toggle="popover"
+                        <h3>Visualize by Folder Name <span tabindex="0" id="thirdinfo" class="material-icons info" role="button" data-toggle="popover"
                             data-trigger="focus" title="Visualize by Folder Name Info"
-                            data-message="Type the name of an outputted folder stored on the server (Format: YYYY-MM-DD_HHMMSS)" style="font-size:15px;">&#xe8fd;</a></h3>
+                            data-message="To visualize a folder already uploaded to the server, type the timestamped folder name (Format: YYYY-MM-DD_HHMMSS)." >&#xe8fd;</span></h3>
                         <hr class='line'>
                         <form action="/directvisualize" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
