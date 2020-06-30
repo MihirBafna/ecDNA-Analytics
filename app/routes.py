@@ -171,6 +171,11 @@ def downloadIMG(imgname, folder):
     except FileNotFoundError:
         abort(404)
 
+@app.route('/clearclientcache')
+def clearClientCache():
+    path = app.config["IMAGE_DOWNLOADS"]
+    numfiles = im.removeClientCache(path)
+    return render_template("/visualize")
 
 @app.route('/mpDetector')
 def metaDetect():

@@ -119,3 +119,11 @@ def move(initial,final):
 def remove(path):
     command = f"rm {path}"
     subprocess.run(command.split())
+
+def removeClientCache(path):
+    count = 0
+    for file in os.listdir(path):
+        if file.endswith(".zip"):
+            remove(os.path.join(path,file))
+            count+=1
+    return count
