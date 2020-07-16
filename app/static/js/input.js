@@ -4,7 +4,7 @@ $("#disabled").click(function () {
 });
 $(".custom-file-input").on("change", function () {
     var fileName = $(this).val().split("\\").pop();
-    $(this).siblings(".custom-file-label").addClass("selected").html("Folder Uploaded");
+    $(this).siblings(".custom-file-label").addClass("selected").html("Folder Selected");
     $(".selected").css("color", "rgb(0,0,0,0.3)");
 });
 $('#firstinfo').popover({
