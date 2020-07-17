@@ -1,6 +1,6 @@
 # ecDNA-Analytics
 
-Web platform that integrates the metaDetect and ecSeg  tools with respective visualizations for the purpose of extrachromosomal DNA analysis.
+Web platform that integrates the metaDetect and ecSeg  tools with respective visualizations for the purpose of extrachromosomal DNA analysis. View at <http://genomequery.ucsd.edu:5000/>
 
 ## Tools
 
@@ -14,7 +14,12 @@ metaDetect is a platform for identifying metaphase spreads in a population of ce
 (<https://github.com/UCRajkumar/ecSeg>)
 ecSeg is a platform designed to identify extrachromosomal DNA (ecDNA) from metaphase images stained with DAPI and FISH probes (Rajkumar, U. iScience 2019)
 
-## Installation
+## Webtool Usage
+
+* View webtool at <http://genomequery.ucsd.edu:5000/>
+
+
+## Local Installation
 
 NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
 
@@ -25,7 +30,7 @@ NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
 
     ```bash
     conda env create -f environment.yml
-    source activate env 
+    conda activate env 
     ```
 
     * Using pip:
@@ -50,7 +55,7 @@ NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
     export FLASK_ENV=development
     ```
 
-## Usage
+## Local Usage
 
 Whenever starting up the server, do the following:
 
@@ -58,7 +63,7 @@ Whenever starting up the server, do the following:
     * Using Conda:  
 
    ```bash
-   source activate env 
+   conda activate env 
    ```
 
     * Using pip:
