@@ -14,10 +14,18 @@ metaDetect is a platform for identifying metaphase spreads in a population of ce
 (<https://github.com/UCRajkumar/ecSeg>)
 ecSeg is a platform designed to identify extrachromosomal DNA (ecDNA) from metaphase images stained with DAPI and FISH probes (Rajkumar, U. iScience 2019)
 
-## Webtool Usage
+## Online Usage
 
 * View webtool at <http://genomequery.ucsd.edu:5000/>
 
+### Use ecSeg
+
+* Navigate to the ecSeg 'Input' page
+
+
+### Use metaDetect
+
+* IN DEVELOPMENT
 
 ## Local Installation
 
