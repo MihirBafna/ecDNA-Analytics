@@ -33,6 +33,8 @@ ecSeg is a platform designed to identify extrachromosomal DNA (ecDNA) from metap
 * Once input folders have been selected, the user will be redirected to the visualize page shown below:
    <img src="app/static/img/appimages/visualize.png" width="75%">
    
+   * Image Magnification - to display the magnified images, the user must double click on the top row of images and a white selection box will appear. Clicking one more time will freeze the selection and detatch the mouse from the selector box. Magnified images are shown in the row below.
+   
    * Page Layout - On this visualize page, the images displayed going from left to right are the original inputted image, the grayscaled dapi image, and the ecSeg output image. The two image sections below the first row of images are deafulted to the magnified (10x) versions of the original image and the ecSeg output image respectively. User can toggle between the magnified version of the original adn the grayscaled dapi via the toolbar.
    
    * Select Image - On the top left corner of the page is the image select button. Once clicked, a side panel will open up listing the names of every single input image for the user to select and appropriately visualize. The timestamped folder name is labelled at the top. Save this folder name for future reference and usage.
