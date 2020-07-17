@@ -54,7 +54,7 @@ ecSeg is a platform designed to identify extrachromosomal DNA (ecDNA) from metap
 
 * IN DEVELOPMENT
 
-## Local Installation
+## Local Installation (for developers)
 
 NOTE THAT THIS APP IS IN DEVELOPMENTAL STAGE
 
