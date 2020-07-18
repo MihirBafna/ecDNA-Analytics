@@ -60,17 +60,12 @@
                         <h3>Upload Images for ecSeg <span tabindex="0" id="firstinfo" class="material-icons info" role="button" data-placement="left"
                             data-toggle="popover" data-trigger="focus" title="Uploading Input Images Info"
                             data-message="To run ecSeg, select a folder containing input images (DAPI / FISH metaphase spreads, TIF only). After ecSeg is run, the output images will be visualized. Save the timestamped folder name for future reference.">&#xe8fd;</span> </h3>
-                        <hr class='line'>
-                        <form action="/uploadInput" method="POST" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <div class="custom-file">
-                                    <input class="custom-file-input" id="input-folder-2" name="input-folder-2[]" type="file"
-                                        multiple webkitdirectory accept="image/*">
-                                    <label class="custom-file-label label" for="input-folder-2[]">Select folder...</label>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Launch</button>
-                        </form>
+                        <hr class='line' style="margin-bottom: 20px;">
+                        <div class="progress" style="height: 30px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+                                aria-valuemin="0" aria-valuemax="100" style="width: 75%; background-color: rgb(24, 190, 255); ">0% complete</div>
+                        </div>
+                        <button type="button" class="btn btn-primary" style="margin-top: 19px;" data-toggle="modal" data-target="#ecSegModal">Launch</button>                    
                     </div>
                 </div>
                 <div class="card" style="width: 18rem;">
@@ -107,6 +102,38 @@
                             </div>
                             <button type="submit" class="btn btn-primary">Visualize</button>
                         </form>
+                    </div>
+                </div>
+                <div class="modal fade" id="ecSegModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                                <form action="/uploadInput" method="POST" enctype="multipart/form-data">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Upload for ecSeg</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <div class="custom-file">
+                                                <input class="custom-file-input" id="input-folder-2" name="input-folder-2[]" type="file"
+                                                    multiple webkitdirectory accept="image/*">
+                                                <label class="custom-file-label label" for="input-folder-2[]">Select folder...</label>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" type="email" name="email" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="closebtn" class="btn btn-primary"  data-dismiss="modal" aria-label="Close">Close</button>
+                                        <button type="submit" class="btn btn-primary">Run ecSeg</button>
+                                    </div>
+                                </form>                          
+                        </div>
                     </div>
                 </div>
             </div>

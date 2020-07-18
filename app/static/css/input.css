@@ -81,3 +81,6 @@
     .popover-header{
         color: #000;
     }
+    #closebtn:hover{
+        background-color: gray;
+    }

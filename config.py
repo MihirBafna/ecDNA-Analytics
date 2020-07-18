@@ -9,6 +9,8 @@ class Config(object):
 
     IMAGE_UPLOADS = "app/static/img"
     IMAGE_DOWNLOADS = "app/static/client/img"
+    EMAIL_USERNAME=os.environ.get('EMAIL_USER')
+    EMAIL_PASSWORD=os.environ.get('EMAIL_PASSWORD')
     # ECSEG_LOCATION = "/Users/MihirBafna/Documents/CS/Projects/ecSeg"
     # METADETECT_LOCATION=""
 

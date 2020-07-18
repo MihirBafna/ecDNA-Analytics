@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 from flask.helpers import flash
 import shutil
+import smtplib
 
 
 
@@ -24,8 +25,12 @@ def input():
 def uploadInput():
     if request.method == "POST":
         if request.files:
-            folder = request.files.getlist("input-folder-2[]")
             timestamped = datetime.now().strftime('%Y-%m-%d_%H%M%S')
+            folder = request.files.getlist("input-folder-2[]")
+            email = request.form.get("email")
+            sendaddress = app.config["EMAIL_USERNAME"]
+            sendpassword = app.config["EMAIL_PASSWORD"]
+            print(email)
             folderpath = os.path.join(
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped)
             os.makedirs(folderpath)
@@ -51,9 +56,9 @@ def uploadInput():
                 flash(f'Invalid folder. Folder name {timestamped} could not be created and visualized. Check for proper input folder format.', 'danger')
             except OSError as e:
                 print("Error: %s : %s" % (folderpath, e.strerror))
-            return render_template('input.html')
+            return redirect('/input')
         # RUN ECSEG HERE
-        tools.runecSeg(folderpath,1)
+        # tools.runecSeg(folderpath,1)
         im.reorganizeOutput(timestamped)
         path = os.path.join(app.config["IMAGE_UPLOADS"],
                             "ecSegOutput", timestamped, "orig")+'/'
@@ -61,6 +66,15 @@ def uploadInput():
         im.tiffToPNG(timestamped)
         session['imagelist'] = im.imglist(path)
         session['imagename'] = session['imagelist'][0]
+        with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+            smtp.ehlo()
+            smtp.starttls()
+            smtp.ehlo()
+            smtp.login(sendaddress, sendpassword)
+            subject = 'Your Visualization is Ready'
+            body = f'Dear User: \n\necSeg was run successfully on your given input images and parameters. You have been redirected to the \'visualize\' page. Save the folder name {timestamped} for future reference and visualization. \n\nDo not reply to this email. If you have a problem with the ecDNA Analytics webtool, create an issue on github (linked below). \nhttps://github.com/MihirBafna/ecDNA-Analytics/issues/new \n\n- ecDNA Analytics Support'
+            msg = f'Subject: {subject}\n\n{body}'
+            smtp.sendmail(sendaddress, email, msg)
         return redirect('/visualize')
     else:
         return render_template('input.html')
@@ -102,7 +116,7 @@ def uploadecSeg():
                 flash(f'Invalid folder. Folder name {timestamped} could not be created and visualized. Check for proper output folder format.', 'danger')
             except OSError as e:
                 print("Error: %s : %s" % (directorypath, e.strerror))
-            return render_template('input.html')
+            return redirect('/input')
         path = os.path.join(app.config["IMAGE_UPLOADS"],
                             "ecSegOutput", timestamped, "orig")+'/'
         session['folder'] = timestamped
