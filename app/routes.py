@@ -58,7 +58,7 @@ def uploadInput():
                 print("Error: %s : %s" % (folderpath, e.strerror))
             return redirect('/input')
         # RUN ECSEG HERE
-        # tools.runecSeg(folderpath,1)
+        tools.runecSeg(folderpath,1)
         im.reorganizeOutput(timestamped)
         path = os.path.join(app.config["IMAGE_UPLOADS"],
                             "ecSegOutput", timestamped, "orig")+'/'
