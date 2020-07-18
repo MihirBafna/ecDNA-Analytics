@@ -175,7 +175,7 @@ def downloadIMG(imgname, folder):
 def clearClientCache():
     path = app.config["IMAGE_DOWNLOADS"]
     numfiles = im.removeClientCache(path)
-    return render_template("/visualize")
+    return redirect('/visualize')
 
 @app.route('/mpDetector')
 def metaDetect():
