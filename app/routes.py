@@ -66,15 +66,16 @@ def uploadInput():
         im.tiffToPNG(timestamped)
         session['imagelist'] = im.imglist(path)
         session['imagename'] = session['imagelist'][0]
-        with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
-            smtp.ehlo()
-            smtp.starttls()
-            smtp.ehlo()
-            smtp.login(sendaddress, sendpassword)
-            subject = 'Your Visualization is Ready'
-            body = f'Dear User: \n\necSeg was run successfully on your given input images and parameters. You have been redirected to the \'visualize\' page. Save the folder name {timestamped} for future reference and visualization. \n\nDo not reply to this email. If you have a problem with the ecDNA Analytics webtool, create an issue on github (linked below). \nhttps://github.com/MihirBafna/ecDNA-Analytics/issues/new \n\n- ecDNA Analytics Support'
-            msg = f'Subject: {subject}\n\n{body}'
-            smtp.sendmail(sendaddress, email, msg)
+        if email:
+            with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+                smtp.ehlo()
+                smtp.starttls()
+                smtp.ehlo()
+                smtp.login(sendaddress, sendpassword)
+                subject = 'Your Visualization is Ready'
+                body = f'Dear User: \n\necSeg was run successfully on your given input images and parameters. You have been redirected to the \'visualize\' page. Save the folder name {timestamped} for future reference and visualization. \n\nDo not reply to this email. If you have a problem with the ecDNA Analytics webtool, create an issue on github (linked below). \nhttps://github.com/MihirBafna/ecDNA-Analytics/issues/new \n\n- ecDNA Analytics Support'
+                msg = f'Subject: {subject}\n\n{body}'
+                smtp.sendmail(sendaddress, email, msg)
         return redirect('/visualize')
     else:
         return render_template('input.html')
