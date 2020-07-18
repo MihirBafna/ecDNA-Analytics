@@ -48,8 +48,13 @@ def uploadInput():
             for file in folder:
                 print(file.filename)
                 if file.filename == "":
-                    print("ERROR: File has no filename")
-                    return redirect(request.url)
+                    try:
+                        shutil.rmtree(folderpath)
+                        flash(
+                            f'No folder was selected.', 'warning')
+                    except OSError as e:
+                        print("Error: %s : %s" % (folderpath, e.strerror))
+                    return redirect('/input')
                 if im.allowed_image(file.filename, True):
                     path = os.path.join(
                         app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, '/'.join(file.filename.split('/')[1:]))
@@ -109,8 +114,13 @@ def uploadecSeg():
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, "labels"))
             for file in folder:
                 if file.filename == "":
-                    print("ERROR: File has no filename")
-                    return redirect(request.url)
+                    try:
+                        shutil.rmtree(directorypath)
+                        flash(
+                            f'No folder was selected.', 'warning')
+                    except OSError as e:
+                        print("Error: %s : %s" % (directorypath, e.strerror))
+                    return redirect('/input')
                 if im.allowed_image(file.filename, False):
                     path = os.path.join(
                         app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, '/'.join(file.filename.split('/')[1:]))
