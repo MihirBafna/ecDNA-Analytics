@@ -59,13 +59,13 @@
                         <h3><i class="material-icons">filter_1</i></h3>
                         <h3>Upload Images for ecSeg <span tabindex="0" id="firstinfo" class="material-icons info" role="button" data-placement="left"
                             data-toggle="popover" data-trigger="focus" title="Uploading Input Images Info"
-                            data-message="To run ecSeg, select a folder containing input images (DAPI / FISH metaphase spreads, TIF only). After ecSeg is run, the output images will be visualized. Save the timestamped folder name for future reference.">&#xe8fd;</span> </h3>
+                            data-message="Click Start. To run ecSeg, select a folder containing input images (DAPI / FISH metaphase spreads, TIF only). Additionally, enter your email in the prompt to be notified when ecSeg has completed its tasks and visualizations are ready. After ecSeg is run, the output images will be visualized. Save the timestamped folder name for future reference.">&#xe8fd;</span> </h3>
                         <hr class='line' style="margin-bottom: 20px;">
                         <div class="progress" style="height: 30px;">
                             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
                                 aria-valuemin="0" aria-valuemax="100" style="width: 0%; background-color: rgb(24, 190, 255); ">0%</div>
                         </div>
-                        <button type="button" class="btn btn-primary" style="margin-top: 19px;" data-toggle="modal" data-target="#ecSegModal">Launch</button>                    
+                        <button type="button" class="btn btn-primary" style="margin-top: 19px;" data-toggle="modal" data-target="#ecSegModal">Start</button>                    
                     </div>
                 </div>
                 <div class="card" style="width: 18rem;">
@@ -127,7 +127,7 @@
                                         <div class="form-group">
                                             <input class="form-control" type="email" name="email" placeholder="Email">
                                         </div>
-                                        <div id="runalert" class="alert alert-primary" style="text-align: left; display: none;">- please wait as ecSeg is running<br>- an email will be sent when visualizations are ready<br>- please do not click the 'run ecSeg' button repeatedly</div>
+                                        <div id="runalert" class="alert alert-primary" style="text-align: left; display: none;">- please wait as ecSeg is running<br>- an email will be sent when visualizations are ready</div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" id="closebtn" class="btn btn-danger"  data-dismiss="modal" aria-label="Close">Close</button>
