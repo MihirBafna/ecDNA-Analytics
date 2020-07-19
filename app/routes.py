@@ -30,17 +30,6 @@ def uploadInput():
             email = request.form.get("email")
             sendaddress = app.config["EMAIL_USERNAME"]
             sendpassword = app.config["EMAIL_PASSWORD"]
-            if email:
-                with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
-                    smtp.ehlo()
-                    smtp.starttls()
-                    smtp.ehlo()
-                    smtp.login(sendaddress, sendpassword)
-                    subject = 'ecSeg is Running'
-                    body = f'Dear User: \n\necSeg is currently running on your input images and parameters. This may take some time to complete. Another email will be sent when finished and visualizations are ready. \n\nDo not reply to this email. If you have a problem with the ecDNA Analytics webtool, create an issue on github (linked below). \nhttps://github.com/MihirBafna/ecDNA-Analytics/issues/new \n\n- ecDNA Analytics Support'
-                    msg = f'Subject: {subject}\n\n{body}'
-                    smtp.sendmail(sendaddress, email, msg)
-            print(email)
             folderpath = os.path.join(
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped)
             os.makedirs(folderpath)
