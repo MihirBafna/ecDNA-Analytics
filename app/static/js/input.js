@@ -41,5 +41,7 @@ $('#thirdinfo').popover({
 });
 
 $('#runecseg').click(function(){
+    $("#ecsegform").submit();   
     $("#runalert").show();
+    $("#runecseg").prop('disabled', true);
 });
