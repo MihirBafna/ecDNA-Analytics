@@ -1,3 +1,5 @@
+$("#runalert").hide();
+
 $(this).siblings(".custom-file-label").css("color", "rgb(0,0,0,0.3)");
 $("#disabled").click(function () {
     alert("Upload image folder first before visualizing")
@@ -36,4 +38,8 @@ $('#thirdinfo').popover({
     content: function () {
         return '<div class="popover-message">' + $(this).data("message") + '</div>';
     }
+});
+
+$('#runecseg').click(function(){
+    $("#runalert").show();
 });
