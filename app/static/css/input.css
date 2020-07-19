@@ -28,13 +28,13 @@
         color: rgba(255, 255, 255, .5);
     } 
 
-    .btn-primary{
+    .btn{
         border-color: rgb(24, 190, 255);
         background: rgb(24, 190, 255);
         color: #ffffff;
         text-decoration: none;
     }
-    .btn-primary:hover{
+    .btn:hover{
         background: rgb(32, 42, 50,0.7);
         color: #ffffff;
         border-color: rgb(255, 255, 255);
