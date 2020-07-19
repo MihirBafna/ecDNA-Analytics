@@ -27,7 +27,7 @@ ecSeg is a platform designed to identify extrachromosomal DNA (ecDNA) from metap
 
     * **Panel 2** - This input panel is *for users who have already run ecSeg on local machines and want to visualize the output*. To visualize ecSeg output, select a directory containing subdirectories named 'labels', 'dapi', and optionally 'orig (all subdirectories must contain the same number of images with matching filenames). If the directory does not have an 'orig' folder, one will be created as long as the original images are located in the chosen directory. Once visualized, save the timestamped folder name for future reference.
 
-    * **Panel 3** - This input panel is *for users who want to visualize an ecSeg outputted folder that has already been recorded and stored on the genomequery server*. To visualize a folder already uploaded to the server, type the timestamped folder name (Format: YYYY-MM-DD_HHMMSS).
+    * **Panel 3** - This input panel is *for users who want to visualize an ecSeg output folder that has already been recorded and stored on the genomequery server*. To visualize a folder already uploaded to the server, type the timestamped folder name (Format: YYYY-MM-DD_HHMMSS).
 
 
 * Once input folders have been selected, the user will be redirected to the visualize page shown below:
