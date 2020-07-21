@@ -201,9 +201,57 @@ def clearClientCache():
     numfiles = im.removeClientCache(path)
     return redirect('/visualize')
 
-@app.route('/mpDetector')
-def metaDetect():
-    return render_template('index.html')
+
+@app.route('/deepmetadetect')
+def deepMetaDetect():
+    return render_template('deepmetadetect.html')
+
+
+@app.route('/uploadwholeslide', methods=["GET", "POST"])
+def uploadWholeSlide():
+    if request.method == "POST":
+        if request.files:
+            folder = request.files.getlist("input-folder-4[]")
+            timestamped = datetime.now().strftime('%Y-%m-%d_%H%M%S')
+            directorypath = os.path.join(
+                app.config["IMAGE_UPLOADS"], "deepMetaDetectOutput", timestamped)
+            origpath = os.path.join(
+                app.config["IMAGE_UPLOADS"], "deepMetaDetectOutput", timestamped, "orig")
+            os.makedirs(origpath)
+            os.mkdir(os.path.join(
+                app.config["IMAGE_UPLOADS"], "deepMetaDetectOutput", timestamped, "labels"))
+            for file in folder:
+                if file.filename == "":
+                    try:
+                        shutil.rmtree(directorypath)
+                        flash(
+                            f'No folder was selected.', 'warning')
+                    except OSError as e:
+                        print("Error: %s : %s" % (directorypath, e.strerror))
+                    return redirect('/deepmetadetect')
+                if im.allowed_image(file.filename, False):
+                    path = os.path.join(
+                        app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, '/'.join(file.filename.split('/')[1:]))
+                    file.save(path)
+                    print(file.filename+" saved")
+                else:
+                    print(file.filename+" not allowed")
+        if im.correctOutputFolderStructure(directorypath):  # check if folder is correct here
+            flash(f'Folder {timestamped} has been created and visualized. Save this name for future reference.', 'success')
+        else:
+            try:
+                shutil.rmtree(directorypath)
+                flash(f'Invalid folder. Folder name {timestamped} could not be created and visualized. Check for proper output folder format.', 'danger')
+            except OSError as e:
+                print("Error: %s : %s" % (directorypath, e.strerror))
+            return redirect('/input')
+        # RUN DEEPMETADETECT HERE
+        # tools.runDeepMetaDetect(folderpath, 1)
+        im.tiffToPNG(timestamped)
+        return redirect('/deepmetadetect')
+    else:
+        return render_template('deepmetadetect.html')
+
 
 
 

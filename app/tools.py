@@ -7,5 +7,7 @@ def runecSeg(folderpath, arguments):
     command = "python3 ../ecSeg/ecSeg.py -i /" +path +"/ -m ../ecSeg/ecDNA_ResUnet.h5"
     subprocess.run(command.split())
 
-def runMetaDetect():
-    return
+def runDeepMetaDetect(folderpath):
+    path = os.path.abspath(folderpath)
+    command = "python3 ../deepMetaDetect/FILENAME"
+    subprocess.run(command.split())
