@@ -92,6 +92,9 @@ def uploadecSeg():
         if request.files:
             folder = request.files.getlist("input-folder-3[]")
             timestamped = datetime.now().strftime('%Y-%m-%d_%H%M%S')
+            email = request.form.get("email")
+            sendaddress = app.config["EMAIL_USERNAME"]
+            sendpassword = app.config["EMAIL_PASSWORD"]
             directorypath = os.path.join(
                 app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped)
             origpath = os.path.join(
@@ -164,9 +167,7 @@ def directVisualize():
             return redirect('/visualize')
         else:
             flash(f'Invalid folder. Folder name {folder} not recognized.', 'danger')
-            return render_template('input.html')
-    else:
-        return render_template('input.html')
+    return redirect('/input')
 
 @app.route('/downloadAll/<folder>')
 def downloadAll(folder):
@@ -201,10 +202,9 @@ def clearClientCache():
     numfiles = im.removeClientCache(path)
     return redirect('/visualize')
 
-
-@app.route('/deepmetadetect')
-def deepMetaDetect():
-    return render_template('deepmetadetect.html')
+@app.route('/dmdinput')
+def dmpdInput():
+    return render_template('dmdinput.html')
 
 
 @app.route('/uploadwholeslide', methods=["GET", "POST"])
@@ -228,30 +228,77 @@ def uploadWholeSlide():
                             f'No folder was selected.', 'warning')
                     except OSError as e:
                         print("Error: %s : %s" % (directorypath, e.strerror))
-                    return redirect('/deepmetadetect')
+                    return redirect('/dmdinput')
                 if im.allowed_image(file.filename, False):
                     path = os.path.join(
-                        app.config["IMAGE_UPLOADS"], "ecSegOutput", timestamped, '/'.join(file.filename.split('/')[1:]))
+                        app.config["IMAGE_UPLOADS"], "deepMetaDetectOutput", timestamped, "orig", '/'.join(file.filename.split('/')[1:]))
                     file.save(path)
                     print(file.filename+" saved")
                 else:
                     print(file.filename+" not allowed")
-        if im.correctOutputFolderStructure(directorypath):  # check if folder is correct here
-            flash(f'Folder {timestamped} has been created and visualized. Save this name for future reference.', 'success')
-        else:
-            try:
-                shutil.rmtree(directorypath)
-                flash(f'Invalid folder. Folder name {timestamped} could not be created and visualized. Check for proper output folder format.', 'danger')
-            except OSError as e:
-                print("Error: %s : %s" % (directorypath, e.strerror))
-            return redirect('/input')
+        # if im.correctInputFolderStructure(directorypath):  # check if folder is correct here
+        #     flash(f'Folder {timestamped} has been created and visualized. Save this name for future reference.', 'success')
+        # else:
+        #     try:
+        #         shutil.rmtree(directorypath)
+        #         flash(f'Invalid folder. Folder name {timestamped} could not be created and visualized. Check for proper output folder format.', 'danger')
+        #     except OSError as e:
+        #         print("Error: %s : %s" % (directorypath, e.strerror))
+        #     return redirect('/dmdinput')
+        if request.form.get('checkbox') == "option1":
+            im.dmdTiffToPNG(timestamped)
+            session['dmdtimestamped'] = timestamped
+            session['dmdimagelist'] = im.imglist(origpath)
+            session['dmdimagename'] = session['dmdimagelist'][0]
+            session['clusters']={}
+            return redirect('/deepmetadetect')
         # RUN DEEPMETADETECT HERE
         # tools.runDeepMetaDetect(folderpath, 1)
-        im.tiffToPNG(timestamped)
+        email = request.form.get("email")
+        sendaddress = app.config["EMAIL_USERNAME"]
+        sendpassword = app.config["EMAIL_PASSWORD"]
+        print(email)
+        if email:
+            with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+                smtp.ehlo()
+                smtp.starttls()
+                smtp.ehlo()
+                smtp.login(sendaddress, sendpassword)
+                subject = 'Your Visualization is Ready'
+                body = f'Dear User: \n\ndeepMetaDetect was run successfully on your given input images and parameters. You have been redirected and are now able to visualize the output. \n\nDo not reply to this email. If you have a problem with the ecDNA Analytics webtool, create an issue on github (linked below). \nhttps://github.com/MihirBafna/ecDNA-Analytics/issues/new \n\n- ecDNA Analytics Support'
+                msg = f'Subject: {subject}\n\n{body}'
+                smtp.sendmail(sendaddress, email, msg)
         return redirect('/deepmetadetect')
     else:
-        return render_template('deepmetadetect.html')
+        return redirect('/dmdinput')
 
 
+@app.route('/deepmetadetect/<img>')
+def dmdnewimgselect(img):
+    session['dmdimagename'] = img
+    return redirect('/deepmetadetect')
+
+@app.route('/deepmetadetect')
+def deepMetaDetect():
+    return render_template('deepmetadetect.html', images=session['dmdimagelist'],folder=session['dmdtimestamped'],imgname=session['dmdimagename'], clusters=session['clusters'])
 
 
+@app.route('/dmddirectvisualize', methods=["GET", "POST"])
+def dmddirectVisualize():
+    if request.method == "POST":
+        folder = request.form['dmdfolder']
+        print(folder)
+        path = os.path.join(
+            app.config["IMAGE_UPLOADS"], "deepMetaDetectOutput", folder, "orig")+'/'
+        if os.path.exists(path):
+            flash(
+                f'Folder {folder} was visualized.', 'success')
+            session['dmdtimestamped'] = folder
+            session['dmdimagelist'] = im.imglist(path)
+            session['dmdimagename'] = session['dmdimagelist'][0]
+            session['clusters'] = {} #find clusters by reading through text file
+            return redirect('/deepmetadetect')
+        else:
+            flash(
+                f'Invalid folder. Folder name {folder} not recognized.', 'danger')
+    return redirect('/dmdinput')

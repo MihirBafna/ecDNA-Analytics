@@ -66,13 +66,13 @@
             <div id="alert" class="alert alert-primary">HINT: Double click on images to start magnifying</div>
             <div class="row myrow align-items-center">
                 <div class="col-4 mycol">
-                    <img id="orig" class="img-fluid images row1" src= "{{ '../static/img/ecSegOutput/'+folder+'/orig/'+ imgname }}" alt="orig">
+                    <img id="orig" class="img-fluid images row" src= "{{ '../static/img/ecSegOutput/'+folder+'/orig/'+ imgname }}" alt="orig">
                 </div>
                 <div class="col-4 mycol ">
-                    <img id="dapi" class="img-fluid images row1" src="{{ '../static/img/ecSegOutput/'+folder+'/dapi/'+ imgname }}" alt="dapi">
+                    <img id="dapi" class="img-fluid images row" src="{{ '../static/img/ecSegOutput/'+folder+'/dapi/'+ imgname }}" alt="dapi">
                 </div>
                 <div class="col-4  mycol ">
-                    <img id="ecSeg" class="img-fluid images row1" src="{{ '../static/img/ecSegOutput/'+folder+'/labels/'+ imgname }}" alt="ecSeg">
+                    <img id="ecSeg" class="img-fluid images row" src="{{ '../static/img/ecSegOutput/'+folder+'/labels/'+ imgname }}" alt="ecSeg">
                 </div>
             </div>
             <div class="row justify-content-around align-items-center myrow">
@@ -81,7 +81,7 @@
                     <div class="image zoomers" id="origZoom"></div>
                 </div>
                 <div class="col-4 mycol">
-                    <img id="ecSegZoom" class="img-fluid images" src="{{ '../static/img/ecSegOutput/'+folder+'/labels/'+ imgname }}" alt="Park">
+                    <img id="ecSegZoom" class="img-fluid images" src="{{ '../static/img/ecSegOutput/'+folder+'/labels/'+ imgname }}">
                 </div>
             </div>
         </div>

@@ -5,6 +5,8 @@ $(document).ready(function () {
     var ecSeg = false;
     var rowwidth = $(".myrow").width();
     var dapiorigvalue = 0;
+    var metaphasespreads = {};
+    var clustercounter = 0;
     initialize();
     $(window).mousemove(function (event) {
         rowwidth = $(".myrow").width();
@@ -136,10 +138,11 @@ $(document).ready(function () {
                 }
             }
         }
+
     });
 
     $(window).resize(function (event) {
-        // $(".selector").hide();
+        $(".selector").hide();
         $("#origZoom").hide();
         $("#ecSegZoom").hide();
     })
@@ -148,6 +151,17 @@ $(document).ready(function () {
         if (orig || dapi || ecSeg) {
             clicked = true;
             $(".selector").css({ "border-color": "red", "background-color": "rgb(255,0,0,0.5)" })
+
+        }
+        if (orig) {
+            for (i = 1; i <= clustercounter; i++) {
+                var key = "#cluster" + i;
+                if (overlap(key, "#selector1")) {
+                    console.log(key + "showing");
+                }
+            }
+        } else {
+            console.log(key + "showing");
 
         }
     });
@@ -168,17 +182,6 @@ $(document).ready(function () {
     $("#ecSeg").mousemove(function (event) {
         ecSeg = true;
     });
-
-    // function start(){
-    //     var centerx = $("#orig").offset().left+$("#ecSeg").width()/2;
-    //     var centery = $("#orig").offset().top + $("#ecSeg").height() / 2;
-    //     console.log(centerx,centery);
-    //     $(".selector").css({ "border-color": "red", "background-color": "rgb(255,0,0,0.5)" })
-    //     $("#selector1").css({ "top": centery-$("#selector1").height()/2 + "px", "left": centerx - $("#selector1").width() / 2 +"px"});
-    //     $("#selector2").css({ "top": centery - $("#selector1").height() / 2+ "px", "left": centerx - $("#selector1").width() / 2 + rowwidth/3+ "px"});
-    //     $("#selector3").css({ "top": centery - $("#selector1").height() / 2+ "px", "left": centerx - $("#selector1").width() / 2 + 2*rowwidth/3+ "px"});
-    //     showZoom(centerx,centery);
-    // }
 
     function showZoom(x, y) {
         var left = x - ($("#selector1").width() / 2);
@@ -224,6 +227,22 @@ $(document).ready(function () {
         });
     }
 
+    function overlap(idOne, idTwo) {
+        var objOne = $(idOne),
+            objTwo = $(idTwo),
+            offsetOne = objOne.offset(),
+            offsetTwo = objTwo.offset(),
+            topOne = offsetOne.top,
+            topTwo = offsetTwo.top,
+            leftOne = offsetOne.left,
+            leftTwo = offsetTwo.left,
+            widthOne = objOne.width(),
+            widthTwo = objTwo.width(),
+            heightOne = objOne.height(),
+            heightTwo = objTwo.height();
+        var leftTop = leftTwo > leftOne && leftTwo < leftOne + widthOne && topTwo > topOne && topTwo < topOne + heightOne, rightTop = leftTwo + widthTwo > leftOne && leftTwo + widthTwo < leftOne + widthOne && topTwo > topOne && topTwo < topOne + heightOne, leftBottom = leftTwo > leftOne && leftTwo < leftOne + widthOne && topTwo + heightTwo > topOne && topTwo + heightTwo < topOne + heightOne, rightBottom = leftTwo + widthTwo > leftOne && leftTwo + widthTwo < leftOne + widthOne && topTwo + heightTwo > topOne && topTwo + heightTwo < topOne + heightOne;
+        return leftTop || rightTop || leftBottom || rightBottom;
+    }
 
     $("#menubtn").click(function () {
         $("#mySidenav").css({
@@ -262,4 +281,27 @@ $(document).ready(function () {
     $("#alert").delay(5000).slideUp(200, function () {
         $(this).alert('close');
     });
+
+    $(".annotate").click(function(event){
+        var zoomx = event.pageX - $("#zoomed").offset().left -20;
+        var zoomy = event.pageY - $("#zoomed").offset().top-55;
+        var selectorx = $("#selector1").offset().left-$("#orig").offset().left;
+        var selectory = $("#selector1").offset().top - $("#orig").offset().top;
+        var x = Math.round(selectorx + zoomx / 10);
+        var y = Math.round(selectory + zoomy / 10);
+        clustercounter++;
+        var key = "cluster" + clustercounter;
+        var size = 5;
+        metaphasespreads[key] = [x, y, size];
+        console.log(metaphasespreads[key])
+        showsquare(x + $("#orig").offset().left, y + $("#orig").offset().top,size);
+
+
+    });
+
+    function showsquare(x,y,size){
+        var key = "cluster" + clustercounter;
+        $("#divrow").append('<div id="'+key+'" class="selection" style="left: '+x+'px; top: '+y+'px;"></div>');
+
+    }
 });

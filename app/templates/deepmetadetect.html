@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<link rel="stylesheet" href="../static/css/input.css">
+<link rel="stylesheet" href="../static/css/visualize.css">
 <style>
     html,
     body {
@@ -26,86 +26,74 @@
 <div class="container-fluid">
     <div class="background">
         <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <div id="mySidenav" class="sidenav">
+                <a id="closebtn" href="javascript:void(0)" class="closebtn">&times;</a>
+                <h6> Folder: {{folder}} </h6>
+                <hr class="line2">
+                {% for image in images %}
+                    {% if image==imgname %}
+                        <a id="{{images}}" class="selected imglinks" href="/deepmetadetect/{{image}}">{{image}}</a>
+                    {% else %}
+                        <a id="{{image}}" class="imglinks" href="/deepmetadetect/{{image}}">{{image}}</a>
+                    {% endif %}
+                {% endfor %}
+                <hr class="line2">
+            </div>
+            <div id="toolnav" class="toolsidenav selected">
+                <span id="closetoolnav" href="javascript:void(0)" class="closebtn">&times;</span>
+                <a href="https://github.com/MihirBafna/ecDNA-Analytics/issues" target="_blank"
+                    class="btn btn-primary material-icons inbtn" data-toggle="tooltip" data-placement="top"
+                    title="Report Issue on GitHub">&#xe001;</a>
+                <a href="https://github.com/MihirBafna/ecDNA-Analytics/blob/master/README.md#online-usage" target="_blank"
+                    class="btn btn-primary material-icons inbtn" data-toggle="tooltip" data-placement="top"
+                    title="Need Help?">&#xe8fd;</a>
+                <a href="/clearclientcache" class="btn btn-danger material-icons inbtn" data-toggle="tooltip" data-placement="top"
+                    title="Clear client cache on server">delete</a>
+            </div>
             <header class="masthead mb-auto">
                 <div class="inner">
-                    <h2 class="masthead-brand">ecDNA Analytics: </h2>
-                    <h2 class="masthead-brand sub"> deepMetaDetect</h2>
+                    <h3 id="menubtn" class="nav nav-masthead imageselect" data-toggle="tooltip" data-placement="right" title="Select Image">
+                        <i class="material-icons" style="font-size:45px">&#xe060;</i></h3>
+                    <h3 class="masthead-brand">ecDNA Analytics: </h3>
+                    <h3 class="masthead-brand sub"> deepMetaDetect</h3>
                     <nav class="nav nav-masthead justify-content-center">
                         <a class="nav-link" href="/">Home</a>
-                        <a class="nav-link active" href="/metadetectselect">Detect</a>
+                        <a class="nav-link" href="dmdinput">Input</a>
+                        <a class="nav-link active" href="deepmetadetect">Detect</a>
                     </nav>
+                    <h3 id="toolbtn" class="nav nav-masthead toolselect" data-placement="left" data-toggle="tooltip" title="Toolbar"><i class="material-icons" style="font-size:30px">&#xe869;</i></h3>
                 </div>
             </header>
             <hr class="line">
         </div>
         <div class="container d-flex w-100 h-100 p-3 mx-auto flex-column">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-            <div class="row justify-content-around align-items-around myrow">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h3><i class="material-icons">filter_1</i></h3>
-                        <h3>Upload Wholeslide Image <span id="secondinfo" tabindex="0" class="material-icons info"
-                                data-placement="top" role="button" data-toggle="popover" data-trigger="focus"
-                                title="Uploading ecSeg Output Info"
-                                data-message="">&#xe8fd;</span>
-                        </h3>
-                        <hr class='line' style="margin-bottom: 20px;">
-                        <div class="progress" style="height: 30px;">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 0%; background-color: rgb(24, 190, 255); ">0%</div>
+                <div id="selector1" class="selector"></div>
+                    <!-- <div id="alert" class="alert alert-primary">HINT: Double click on images to start magnifying</div> -->
+                <div class="container-fluid mycontainer">
+                    <div id="divrow" class="row myrow1 justify-content-around">
+                        <div id="origcol" class="mycol1 col-6">
+                            <h4 style="color: white; font-weight: 200;">Original</h4>
+                            <hr class="line2" style="margin-top: 0px;">
+                            <img id="orig" class="img-fluid row1 images1"
+                                src="{{ '../static/img/deepMetaDetectOutput/'+folder+'/orig/'+ imgname }}">
                         </div>
-                        <button type="button" class="btn btn-primary" style="margin-top: 19px;" data-toggle="modal"
-                            data-target="#dmdModal">Start</button>
+                        <div id="zoomed" class="mycol1 col-6">
+                            <h4 style="color: white; font-weight: 200;">Magnified</h4>
+                            <hr class="line2" style="margin-top: 0px;">
+                            <img id="origZoom" class="zoomers img-fluid images1 annotate" src="{{ '../static/img/deepMetaDetectOutput/'+folder+'/orig/'+ imgname }}">
+                        </div>
+                    </div>
+                    <div class="row justify-content-around align-items-center myrow1">
+                        <h4 style="color: white; font-weight: 200;">Analytics</h4>
+                        <hr class="line2" style="margin-top: 0px;">
                     </div>
                 </div>
-            </div>
-            <div class="modal fade" id="dmdModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog" role="document">
-                    <div class="modal-content">
-                        <form id="ecsegform" action="/uploadwholeslide" method="POST" enctype="multipart/form-data">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Upload for ecSeg</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <div class="custom-file">
-                                        <input class="custom-file-input" id="input-folder-4" name="input-folder-4[]" type="file"
-                                            multiple webkitdirectory accept="image/*">
-                                        <label class="custom-file-label label" for="input-folder-2[]">Select folder...</label>
-
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" type="email" name="email" placeholder="Email">
-                                </div>
-                                <div id="runalert" class="alert alert-primary" style="text-align: left; display: none;">- please
-                                    wait as ecSeg is running<br>- an email will be sent when visualizations are ready</div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" id="closebtn" class="btn btn-danger" data-dismiss="modal"
-                                    aria-label="Close">Close</button>
-                                <button id="runecseg" type="submit" class="btn btn-primary">Run</button>
-                            </div>
-                        </form>
+                <footer class="footer justify-content-center mt-auto">
+                    <div class="inner">
+                        <p class="gray">Visualizer created by <a href="https://github.com/MihirBafna">Mihir Bafna</a></p>
                     </div>
-                </div>
-                <!-- <footer class="footer justify-content-center mt-auto">
-                                <div class="inner">
-                                    <p class="gray">Visualizer created by <a href="https://github.com/MihirBafna">Mihir Bafna</a></p>
-                                </div>
-                            </footer> -->
+                </footer>
         </div>
-    </div>
 
-    <script src="../static/js/input.js"></script>
-    {% endblock %}
+        <script src="../static/js/visualize.js"></script>
+{% endblock %}

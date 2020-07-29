@@ -16,19 +16,28 @@ def reorganizeOutput(timestamped):
 def tiffToPNG(timestamped):
     path = os.path.join("app/static/img/ecSegOutput/", timestamped, "dapi")
     for file in os.listdir(path):
-        if file.endswith(".tif"):
+        if file.endswith(".tif") or file.endswith(".tiff"):
             im = Image.open(path+"/"+file)
             newim = file[:-3]+"png"
             im.save(path+"/"+newim)
     path = os.path.join("app/static/img/ecSegOutput/", timestamped, "orig")
     for file in os.listdir(path):
-        if file.endswith(".tif"):
+        if file.endswith(".tif") or file.endswith(".tiff"):
             im = Image.open(path+"/"+file)
             newim = file[:-3]+"png"
             im.save(path+"/"+newim)
     path = os.path.join("app/static/img/ecSegOutput/", timestamped, "labels")
     for file in os.listdir(path):
-        if file.endswith(".tif"):
+        if file.endswith(".tif") or file.endswith(".tiff"):
+            im = Image.open(path+"/"+file)
+            newim = file[:-3]+"png"
+            im.save(path+"/"+newim)
+
+
+def dmdTiffToPNG(timestamped):
+    path = os.path.join("app/static/img/deepMetaDetectOutput/", timestamped, "orig")
+    for file in os.listdir(path):
+        if file.endswith(".tif") or file.endswith(".tiff"):
             im = Image.open(path+"/"+file)
             newim = file[:-3]+"png"
             im.save(path+"/"+newim)
@@ -49,9 +58,11 @@ def allowed_image(filename, inout):
 def imglist(filepath):  # get image data after ecSeg is run
     imagelist = []
     for file in os.listdir(filepath):
-        if file.endswith(".png"):
+        if file.endswith(".png") or file.endswith(".jpg") or file.endswith(".jpeg"):
             imagelist.append(file)
     return(imagelist)
+
+
 
 def correctOutputFolderStructure(path):
     directory = os.listdir(path)
