@@ -252,7 +252,7 @@ def uploadWholeSlide():
             session['dmdimagename'] = session['dmdimagelist'][0]
             session['clusters']={}
             return redirect('/deepmetadetect')
-        # RUN DEEPMETADETECT HERE
+        # RUN DEEPMETADETECT HERE |
         # tools.runDeepMetaDetect(folderpath, 1)
         email = request.form.get("email")
         sendaddress = app.config["EMAIL_USERNAME"]
