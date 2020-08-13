@@ -80,7 +80,7 @@
                                 <div class="custom-file">
                                     <input class="custom-file-input" id="input-folder-2" name="input-folder-3[]" type="file"
                                         multiple webkitdirectory accept="image/*">
-                                    <label class="custom-file-label label" for="input-folder-3[]">Select folder...</label>
+                                    <label class="custom-file-label label" for="input-folder-3[]">Select image folder...</label>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Upload</button>
@@ -121,19 +121,26 @@
                                                 <input class="custom-file-input" id="input-folder-2" name="input-folder-2[]" type="file"
                                                     multiple webkitdirectory accept="image/*">
                                                 <label class="custom-file-label label" for="input-folder-2[]">Select folder...</label>
-                                                
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <input class="form-control" type="email" name="email" placeholder="Email">
                                         </div>
+                                        <div class="label">
+                                            BBI Usage:
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" name="folderpath" placeholder="Copy and paste folder path">
+                                        </div>
                                         <div id="runalert" class="alert alert-primary" style="text-align: left; display: none;">- please wait as ecSeg is running<br>- an email will be sent when visualizations are ready</div>
                                     </div>
+
                                     <div class="modal-footer">
                                         <button type="button" id="closebtn" class="btn btn-danger"  data-dismiss="modal" aria-label="Close">Close</button>
                                         <button id="runecseg" type="submit" class="btn btn-primary">Run ecSeg</button>
                                     </div>
-                                </form>                          
+                                </form>
+
                         </div>
                     </div>
                 </div>

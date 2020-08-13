@@ -24,6 +24,10 @@ def input():
 @app.route('/uploadInput', methods=["GET", "POST"])
 def uploadInput():
     if request.method == "POST":
+        fp = request.form.get("folderpath")
+        print(fp)
+        if fp != "":
+                return redirect(f'/inputfolderpath/{fp}')
         if request.files:
             timestamped = datetime.now().strftime('%Y-%m-%d_%H%M%S')
             folder = request.files.getlist("input-folder-2[]")
@@ -140,6 +144,11 @@ def uploadecSeg():
         return render_template('input.html')
 
 
+@app.route('/inputfolderpath/<fp>')
+def inputfolderpath(fp):
+    #fp is a string of the folderpath
+    return fp
+
 @app.route('/visualize/<img>')
 def newimgselect(img):
     session['imagename'] = img
@@ -252,7 +261,7 @@ def uploadWholeSlide():
             session['dmdimagename'] = session['dmdimagelist'][0]
             session['clusters']={}
             return redirect('/deepmetadetect')
-        # RUN DEEPMETADETECT HERE |
+        # RUN DEEPMETADETECT HERE
         # tools.runDeepMetaDetect(folderpath, 1)
         email = request.form.get("email")
         sendaddress = app.config["EMAIL_USERNAME"]
