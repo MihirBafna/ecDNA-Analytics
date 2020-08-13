@@ -26,8 +26,9 @@ def uploadInput():
     if request.method == "POST":
         fp = request.form.get("folderpath")
         print(fp)
+        cp = request.form.get("checkbox")
         if fp != "":
-                return redirect(f'/inputfolderpath/{fp}')
+                return redirect(f'/inputfolderpath/{fp}/{cp}')
         if request.files:
             timestamped = datetime.now().strftime('%Y-%m-%d_%H%M%S')
             folder = request.files.getlist("input-folder-2[]")
@@ -144,10 +145,16 @@ def uploadecSeg():
         return render_template('input.html')
 
 
-@app.route('/inputfolderpath/<fp>')
-def inputfolderpath(fp):
+@app.route('/inputfolderpath/<fp>/<cb>')
+def inputfolderpath(fp,cb):
     #fp is a string of the folderpath
-    return fp
+    #cp is the checkbox determining if they files should be copied or not
+    if cp == "copy":
+        #code for copying folder
+        pass
+    tools.runecSeg(fp, 1)
+    #code for setting session variables based on the ecSeg run folder
+    return redirect('/visualize')
 
 @app.route('/visualize/<img>')
 def newimgselect(img):
