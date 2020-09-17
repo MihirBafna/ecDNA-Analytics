@@ -64,7 +64,7 @@ def uploadInput():
             return redirect('/input')
         # RUN ECSEG HERE
         tools.addToQueue(folderpath,email,timestamped)
-        return redirect('/input')
+        return redirect(request.url)
 
 
 
@@ -119,7 +119,7 @@ def uploadecSeg():
         session['imagename'] = session['imagelist'][0]
         return redirect('/visualize')
     else:
-        return render_template('input.html')
+        return render_template(request.url)
 
 
 @app.route('/inputfolderpath/<fp>/<cp>')

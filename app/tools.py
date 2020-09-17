@@ -13,7 +13,7 @@ def initializeTaskQueue(workers):
 
 def addToQueue(folderpath,email,timestamped):
     fut = executor.submit(runecSeg,folderpath)
-    fut.add_done_callback(functools.partial(runIsComplete, email,timestamped))
+    fut.add_done_callback(functools.partial(runIsComplete, timestamped, email))
 
 def runecSeg(folderpath):
     path=os.path.abspath(folderpath)
