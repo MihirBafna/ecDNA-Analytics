@@ -292,11 +292,23 @@ $(document).ready(function () {
         clustercounter++;
         var key = "cluster" + clustercounter;
         var size = 5;
-        metaphasespreads[key] = [x, y, size];
+        metaphasespreads[key] = [x*10, y*10, size];
         console.log(metaphasespreads[key])
         showsquare(x + $("#orig").offset().left, y + $("#orig").offset().top,size);
 
 
+    });
+
+     $('#downloadMPS').click(function() {
+        console.log(metaphasespreads);
+        $.ajax({
+          type: "POST",
+          contentType: "application/json;charset=utf-8",
+          url: "/downloadMetaphaseSpreads",
+          traditional: "true",
+          data: JSON.stringify(metaphasespreads),
+          dataType: "json"
+          });
     });
 
     function showsquare(x,y,size){

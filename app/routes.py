@@ -8,6 +8,7 @@ from datetime import datetime
 from flask.helpers import flash
 import shutil
 import smtplib
+import json
 
 @app.route('/')
 def home():
@@ -295,3 +296,19 @@ def dmddirectVisualize():
             flash(
                 f'Invalid folder. Folder name {folder} not recognized.', 'danger')
     return redirect('/dmdinput')
+
+
+@app.route('/downloadMetaphaseSpreads',  methods=["GET","POST"])
+def downloadMPS():
+    try:
+        if request.method == "POST":
+            dict = request.get_json()
+            print(dict)
+            path =app.config["IMAGE_ANNOTATIONS"]
+            filename = session['dmdimagename'].split(".")[0]+".json"
+            with open(path+filename, "w") as writer:
+                json.dump(dict,writer)
+            print(path, filename)
+        return send_from_directory(path, filename=filename, as_attachment=True)
+    except FileNotFoundError:
+        abort(404)

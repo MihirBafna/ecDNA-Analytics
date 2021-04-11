@@ -9,6 +9,7 @@ class Config(object):
 
     IMAGE_UPLOADS = "app/static/img"
     IMAGE_DOWNLOADS = "app/static/client/img"
+    IMAGE_ANNOTATIONS = "app/static/client/annotations/"
     EMAIL_USERNAME=os.environ.get('EMAIL_USER')
     EMAIL_PASSWORD=os.environ.get('EMAIL_PASSWORD')
     # ECSEG_LOCATION = "/Users/MihirBafna/Documents/CS/Projects/ecSeg"
